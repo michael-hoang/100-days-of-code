@@ -9,6 +9,8 @@ h1 {
 
 .top-container {
     background-color: #E4f9f5;
+    position: relative;
+    padding-top: 100px;
 }
 
 .middle-container {
@@ -22,3 +24,16 @@ h1 {
     height: 200px;
     background-color: blue;
 }
+
+.top-cloud {
+    position: absolute;
+    right: 300px;
+    top: 50px;
+}
+
+.bottom-cloud {
+    position: absolute;
+    left: 300px;
+    bottom: 300px;
+}
+ 
