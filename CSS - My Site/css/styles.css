@@ -5,6 +5,7 @@ body {
 }
 
 h1 {
+    font-size: 5.625rem;
     margin-top: 0;
     font-family: 'Sacramento', cursive;
 }
@@ -23,11 +24,9 @@ h3 {
     padding-top: 100px;
 }
 
-.middle-container {
-}
+.middle-container {}
 
-.bottom-container {
-}
+.bottom-container {}
 
 .pro {
     text-decoration: underline;
