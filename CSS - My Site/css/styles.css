@@ -30,6 +30,15 @@ a {
     color: #11999E;
 }
 
+hr {
+    border-style: dotted none none;
+    color: #EAF6F6;
+    width: 6%;
+    border-width: 6px;
+    margin-top: 0;
+
+}
+
 .top-container {
     background-color: #E4f9f5;
     position: relative;
@@ -38,7 +47,21 @@ a {
 
 .middle-container {}
 
-.bottom-container {}
+.bottom-container {
+    background-color: #66BFBF;
+    padding: 30px;
+}
+
+.bottom-container p {
+    color: #EAF6F6;
+    font-size: 12px;
+    margin: 0;
+    padding-top: 30px;
+}
+
+.bottom-container a {
+    padding: 10px;
+}
 
 .pro {
     text-decoration: underline;
