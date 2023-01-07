@@ -58,14 +58,18 @@ a {
 
 .camera {
     width: 25%;
+    float: left;
+    margin-right: 30px;
 }
 
 .piano {
     width: 25%;
+    float: right;
+    margin-left: 30px;
 }
 
 .skill-row {
-    margin: 100px auto;
+    margin: 118px auto;
     width: 50%;
     text-align: left;
     line-height: 2;
