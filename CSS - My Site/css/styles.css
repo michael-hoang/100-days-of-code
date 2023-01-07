@@ -74,3 +74,11 @@ a {
     text-align: left;
     line-height: 2;
 }
+
+#photography-description {
+    clear: left;
+}
+
+#piano-description {
+    clear: right;
+}
