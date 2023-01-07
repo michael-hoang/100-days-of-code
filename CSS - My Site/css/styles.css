@@ -57,13 +57,11 @@ a {
 }
 
 .camera {
-    height: 250px;
-    width: auto;
+    width: 25%;
 }
 
 .piano {
-    height: 250px;
-    width: auto;
+    width: 25%;
 }
 
 .skill-row {
