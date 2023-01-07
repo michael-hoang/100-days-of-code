@@ -32,12 +32,19 @@ a {
     color: #11999E;
 }
 
+a {
+    font-family: 'Montserrat', sans-serif;
+}
+
+a:hover {
+    color: #EAF6F6
+}
+
 hr {
-    border-style: dotted none none;
-    color: #EAF6F6;
-    width: 6%;
-    border-width: 6px;
-    margin-top: 0;
+    border: dotted #EAF6F6 6px;
+    border-bottom: none;
+    width: 4%;
+    margin: 100px auto;
 
 }
 
@@ -62,19 +69,19 @@ p {
 
 .bottom-container {
     background-color: #66BFBF;
-    padding: 30px;
-    margin-top: 70px;
+    padding: 60px 30px 30px;
 }
 
 .bottom-container p {
     color: #EAF6F6;
-    font-size: 12px;
-    margin: 0;
-    padding-top: 30px;
+    font-size: 0.75em;
+    padding-top: 20px 0;
+    margin-top: 30px;
 }
 
 .bottom-container a {
-    padding: 10px;
+    margin: 10px 20px;
+    text-decoration: none;
 }
 
 .pro {
@@ -84,12 +91,12 @@ p {
 .top-cloud {
     position: absolute;
     right: 300px;
-    top: 50px;
+    top: 40px;
 }
 
 .bottom-cloud {
     position: absolute;
-    left: 300px;
+    left: 250px;
     bottom: 300px;
 }
 
@@ -125,7 +132,7 @@ p {
     -webkit-border-radius: 8;
     -moz-border-radius: 8;
     border-radius: 8px;
-    font-family: Arial;
+    font-family: 'Montserrat', sans-serif;
     color: #ffffff;
     font-size: 20px;
     padding: 10px 20px 10px 20px;
@@ -143,10 +150,11 @@ p {
 }
 
 .contact-me {
-    width: 50%;
+    width: 40%;
     margin: 0 auto;
 }
 
 .contact-me p {
     margin-bottom: 70px;
+    margin: 40px auto 60px;
 }
