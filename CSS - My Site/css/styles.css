@@ -23,6 +23,10 @@ h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
+h3, a {
+    color: #11999E;
+}
+
 .top-container {
     background-color: #E4f9f5;
     position: relative;
