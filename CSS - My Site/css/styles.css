@@ -16,7 +16,8 @@ h2 {
     font-weight: normal;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: #66BFBF;
 }
 
@@ -24,7 +25,8 @@ h3 {
     font-family: 'Montserrat', sans-serif;
 }
 
-h3, a {
+h3,
+a {
     color: #11999E;
 }
 
@@ -62,4 +64,10 @@ h3, a {
 .piano {
     height: 250px;
     width: auto;
+}
+
+.skill-row {
+    margin: 100px auto;
+    width: 50%;
+    text-align: left;
 }
