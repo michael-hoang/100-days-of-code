@@ -1,4 +1,6 @@
 import datetime as dt
+from bs4 import BeautifulSoup
+import requests
 
 
 def ask_for_year() -> str:
@@ -19,3 +21,5 @@ def ask_for_year() -> str:
 
 
 year = ask_for_year()
+url = 'https://www.billboard.com/charts/hot-100/2000-08-12/'
+response = requests.get(url)
