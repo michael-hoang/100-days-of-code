@@ -24,8 +24,7 @@ def read_web_file():
 
 soup = read_web_file()
 movie_tags = soup.find_all(name='h3', class_='jsx-4245974604')
-
 top100 = []
 
 for movie_tag in movie_tags:
-    top100.append(movie_tag)
+    top100.append(movie_tag.text)
