@@ -21,6 +21,11 @@ def read_web_file():
             content = fp.read()
         return BeautifulSoup(content, "html.parser")
 
-soup = read_web_file()
 
-print(soup)
+soup = read_web_file()
+movie_tags = soup.find_all(name='h3', class_='jsx-4245974604')
+
+top100 = []
+
+for movie_tag in movie_tags:
+    top100.append(movie_tag)
