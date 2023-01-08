@@ -28,3 +28,9 @@ top100 = []
 
 for movie_tag in movie_tags:
     top100.append(movie_tag.text)
+    
+top100.reverse()
+
+with open('top-100-movies.txt', 'a') as f:
+    for movie in top100:
+        f.write(f'{movie}\n')
