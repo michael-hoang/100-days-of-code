@@ -9,6 +9,7 @@ WEB_FILE = './data/100_best_movies.html'
 
 
 def read_web_file():
+    """Open local web file and return BeautifulSoup object."""
     try:
         open(WEB_FILE)
     except FileNotFoundError:
@@ -19,3 +20,7 @@ def read_web_file():
         with open(WEB_FILE, mode="r", encoding="utf-8") as fp:
             content = fp.read()
         return BeautifulSoup(content, "html.parser")
+
+soup = read_web_file()
+
+print(soup)
