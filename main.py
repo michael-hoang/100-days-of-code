@@ -23,3 +23,5 @@ def ask_for_year() -> str:
 year = ask_for_year()
 url = 'https://www.billboard.com/charts/hot-100/2000-08-12/'
 response = requests.get(url)
+markup = response.text
+soup = BeautifulSoup(markup, 'html.parser')
