@@ -35,4 +35,5 @@ songs_h3_tags = [
 
 # Get song titles as a string
 top100Songs = [h3_tag.string for h3_tag in songs_h3_tags]
-print(top100Songs)
+# Remove newline characters (\n) from song titles
+song_split_n = [song.split('\n')[5] for song in top100Songs]
