@@ -1,8 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://www.empireonline.com/movies/features/best-movies-2/"
+URL = "https://web.archive.org/web/20200518073855/https://www.empireonline.com/movies/features/best-movies-2/"
 
 # Write your code below this line 👇
 
+WEB_FILE = './data/100_best_movies.html'
 
+
+def read_web_file():
+    try:
+        open(WEB_FILE)
+    except FileNotFoundError:
+        print(f"You need to save the rendered HTML to {WEB_FILE}")
+        exit()
+    finally:
+        # Read the web page from file
+        with open(WEB_FILE, mode="r", encoding="utf-8") as fp:
+            content = fp.read()
+        return BeautifulSoup(content, "html.parser")
