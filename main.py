@@ -3,21 +3,21 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def ask_for_year() -> str:
-    """Recursively ask user for the year to time travel back to."""
+def ask_for_date() -> str:
+    """Recursively ask user for the date to time travel back to."""
 
-    year = input(
-        'Which year do you want to travel to? Type the date in this format YYYY-MM-DD:\n')
+    date = input(
+        'Which date do you want to travel to? Type the date in this format YYYY-MM-DD:\n')
 
     # Date input validation
     date_format = '%Y-%m-%d'  # YYYY-MM-DD
     try:
-        dateObject = dt.datetime.strptime(year, date_format)
+        dateObject = dt.datetime.strptime(date, date_format)
         # print(dateObject)
-        return year
+        return date
     except ValueError:
         print('Incorrect date format. Should be YYYY-MM-DD')
-        ask_for_year()
+        ask_for_date()
 
 
 def get_top100Songs(beautifulSoup_object: BeautifulSoup) -> list:
@@ -33,11 +33,9 @@ def get_top100Songs(beautifulSoup_object: BeautifulSoup) -> list:
     return top100Songs
 
 
-# year = ask_for_year()
-url = 'https://www.billboard.com/charts/hot-100/2000-08-12/'
+date = ask_for_date()
+url = f'https://www.billboard.com/charts/hot-100/{date}/'
 response = requests.get(url)
 markup = response.text
 soup = BeautifulSoup(markup, 'html.parser')
 top100Songs = get_top100Songs(soup)
-
-print(top100Songs)
