@@ -12,6 +12,8 @@ load_dotenv()
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
+SCOPE = 'playlist-modify-private'
+CACHE_PATH = 'token.txt'
 
 
 def ask_for_date() -> str:
@@ -44,13 +46,18 @@ def get_top100Songs(beautifulSoup_object: BeautifulSoup) -> list:
     return top100Songs
 
 
-date = ask_for_date()
-url = f'https://www.billboard.com/charts/hot-100/{date}/'
-response = requests.get(url)
-markup = response.text
-soup = BeautifulSoup(markup, 'html.parser')
-top100Songs = get_top100Songs(soup)
+# date = ask_for_date()
+# url = f'https://www.billboard.com/charts/hot-100/{date}/'
+# response = requests.get(url)
+# markup = response.text
+# soup = BeautifulSoup(markup, 'html.parser')
+# top100Songs = get_top100Songs(soup)
 
 # Authentication with Spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-    client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI))
+    client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI,
+    scope=SCOPE, cache_path=CACHE_PATH))
+access_token = SpotifyOAuth.get_access_token(sp.auth_manager)
+current_user = sp.current_user()
+print(current_user)
+print(type(current_user))
