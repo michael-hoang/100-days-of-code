@@ -59,5 +59,4 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=SCOPE, cache_path=CACHE_PATH))
 access_token = SpotifyOAuth.get_access_token(sp.auth_manager)
 current_user = sp.current_user()
-print(current_user)
-print(type(current_user))
+user_id = current_user['id']
