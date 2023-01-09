@@ -78,3 +78,13 @@ Now if you close PyCharm and restart, you should see a new file in this project 
 HINT 1: You'll need this method: https://spotipy.readthedocs.io/en/2.13.0/#spotipy.client.Spotify.current_user
 
 HINT 2: The output of the above method is a dictionary, look for the value of the "id" key.
+
+
+## Step 3 - Search Spotify for the Songs from Step 1
+1. Using the Spotipy documentation, create a list of Spotify song URIs for the list of song names you found from step 1 (scraping billboard 100).
+
+HINT 1: You can use the query format "track: {name} year: {YYYY}" to narrow down on a track name from a particular year.
+
+HINT 2: Sometimes a song is not available in Spotify, you'll want to use exception handling to skip over those songs.
+
+HINT 3: `pprint()` might help you visualise the result better. https://docs.python.org/3/library/pprint.html

@@ -46,17 +46,17 @@ def get_top100Songs(beautifulSoup_object: BeautifulSoup) -> list:
     return top100Songs
 
 
-# date = ask_for_date()
-# url = f'https://www.billboard.com/charts/hot-100/{date}/'
-# response = requests.get(url)
-# markup = response.text
-# soup = BeautifulSoup(markup, 'html.parser')
-# top100Songs = get_top100Songs(soup)
+date = ask_for_date()
+url = f'https://www.billboard.com/charts/hot-100/{date}/'
+response = requests.get(url)
+markup = response.text
+soup = BeautifulSoup(markup, 'html.parser')
+top100Songs = get_top100Songs(soup)
 
 # Authentication with Spotify
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI,
-    scope=SCOPE, cache_path=CACHE_PATH))
+    scope=SCOPE, cache_path=CACHE_PATH, show_dialog=True))
 access_token = SpotifyOAuth.get_access_token(sp.auth_manager)
 current_user = sp.current_user()
 user_id = current_user['id']
