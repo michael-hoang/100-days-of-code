@@ -1,6 +1,14 @@
 import datetime as dt
 from bs4 import BeautifulSoup
 import requests
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 
 def ask_for_date() -> str:
@@ -39,3 +47,6 @@ response = requests.get(url)
 markup = response.text
 soup = BeautifulSoup(markup, 'html.parser')
 top100Songs = get_top100Songs(soup)
+
+# Authentication with Spotify
+
