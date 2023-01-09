@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests
 import os
 from dotenv import load_dotenv
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 
 load_dotenv()
@@ -49,4 +51,5 @@ soup = BeautifulSoup(markup, 'html.parser')
 top100Songs = get_top100Songs(soup)
 
 # Authentication with Spotify
-
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
+    client_id=CLIENT_ID, client_secret=CLIENT_SECRET))
