@@ -4,13 +4,14 @@ import requests
 import os
 from dotenv import load_dotenv
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 
 
 load_dotenv()
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+REDIRECT_URI = os.getenv('REDIRECT_URI')
 
 
 def ask_for_date() -> str:
@@ -51,5 +52,5 @@ soup = BeautifulSoup(markup, 'html.parser')
 top100Songs = get_top100Songs(soup)
 
 # Authentication with Spotify
-sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
-    client_id=CLIENT_ID, client_secret=CLIENT_SECRET))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id=CLIENT_ID, client_secret=CLIENT_SECRET, redirect_uri=REDIRECT_URI))
