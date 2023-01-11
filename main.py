@@ -55,6 +55,13 @@ def authenticate_with_spotify() -> spotipy.Spotify:
         scope=SCOPE, cache_path=CACHE_PATH, show_dialog=True))
     return sp
 
+def get_spotify_song_uri(song) -> str:
+    """Query song track and year, and return Spotify song URI."""
+
+    query = f'track:{song} year:{date[:4]}'
+    result = sp.search(q=query, type='track', limit=1)
+    uri = result['tracks']['items'][0]['uri']
+    return uri
 
 date = ask_for_date()
 url = f'https://www.billboard.com/charts/hot-100/{date}/'
@@ -67,6 +74,6 @@ user_id = sp.current_user()['id']
 
 # Get Spotify song URI
 song = top100Songs[0]
-query = f'track:{song} year:{date[:4]}'
-result = sp.search(q=query, type='track', limit=1)
-pprint(result['tracks']['items'][0]['uri'])
+song_uri = get_spotify_song_uri(song=song)
+print(song)
+print(song_uri)
