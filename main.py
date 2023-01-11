@@ -55,7 +55,7 @@ def authenticate_with_spotify() -> spotipy.Spotify:
         scope=SCOPE, cache_path=CACHE_PATH, show_dialog=True))
     return sp
 
-def get_spotify_song_uri(song) -> str:
+def get_spotify_song_uri(song: str) -> str:
     """Query song track and year, and return Spotify song URI."""
 
     query = f'track:{song} year:{date[:4]}'
@@ -72,8 +72,10 @@ top100Songs = get_top100Songs(soup)
 sp = authenticate_with_spotify()
 user_id = sp.current_user()['id']
 
-# Get Spotify song URI
-song = top100Songs[0]
-song_uri = get_spotify_song_uri(song=song)
-print(song)
-print(song_uri)
+# Get list of Spotify song URIs
+top100Songs_uri = []
+for song in top100Songs:
+    try:
+        top100Songs_uri.append(get_spotify_song_uri(song))
+    except IndexError:
+        print(f'Not on Spotify: {song}')
