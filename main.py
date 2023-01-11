@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from prettyprinter import pprint
 
 
 load_dotenv()
@@ -63,3 +64,9 @@ soup = BeautifulSoup(markup, 'html.parser')
 top100Songs = get_top100Songs(soup)
 sp = authenticate_with_spotify()
 user_id = sp.current_user()['id']
+
+# Get Spotify song URI
+song = top100Songs[0]
+query = f'track:{song} year:{date[:4]}'
+result = sp.search(q=query, type='track', limit=1)
+pprint(result['tracks']['items'][0]['uri'])
