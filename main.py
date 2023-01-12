@@ -95,3 +95,7 @@ for song in top100Songs:
 
 top100_playlist = create_spotify_playlist()
 playlist_id = top100_playlist['id']
+
+# Add songs to playlist
+sp.playlist_add_items(playlist_id, top100Songs_uri)
+print(f'"{date} Billboard 100" playlist created on Spotify.')
