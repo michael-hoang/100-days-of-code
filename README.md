@@ -88,3 +88,13 @@ HINT 1: You can use the query format "track: {name} year: {YYYY}" to narrow down
 HINT 2: Sometimes a song is not available in Spotify, you'll want to use exception handling to skip over those songs.
 
 HINT 3: `pprint()` might help you visualise the result better. https://docs.python.org/3/library/pprint.html
+
+
+## Step 4 - Creating and Adding to Spotify Playlist
+1. Using the Spotipy documentation, create a new private playlist with the name "YYYY-MM-DD Billboard 100", where the date is the date you inputted in step 1.
+
+HINT: You'll need the user id you got from Step 2.
+
+2. Add each of the songs found in Step 3 to the new playlist.
+
+HINT: You'll need the playlist id which is returned as an output once you've successfully created a new playlist.
