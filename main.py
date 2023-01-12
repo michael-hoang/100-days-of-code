@@ -15,6 +15,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 SCOPE = 'playlist-modify-private'
 CACHE_PATH = 'token.txt'
+USERNAME = os.getenv('USERNAME')
 
 
 def ask_for_date() -> str:
@@ -55,6 +56,7 @@ def authenticate_with_spotify() -> spotipy.Spotify:
         scope=SCOPE, cache_path=CACHE_PATH, show_dialog=True))
     return sp
 
+
 def get_spotify_song_uri(song: str) -> str:
     """Query song track and year, and return Spotify song URI."""
 
@@ -62,6 +64,7 @@ def get_spotify_song_uri(song: str) -> str:
     result = sp.search(q=query, type='track', limit=1)
     uri = result['tracks']['items'][0]['uri']
     return uri
+
 
 date = ask_for_date()
 url = f'https://www.billboard.com/charts/hot-100/{date}/'
@@ -79,3 +82,9 @@ for song in top100Songs:
         top100Songs_uri.append(get_spotify_song_uri(song))
     except IndexError:
         print(f'Not on Spotify: {song}')
+
+# Create playlist
+playlist_name = f'{date} Billboard 100'
+description = f'This playlist consists of the top 100 songs on Billboard as of {date}. It was created using Python.'
+top100_playlist = sp.user_playlist_create(user=USERNAME, name=playlist_name, public=False,
+                                          collaborative=False, description=description)
