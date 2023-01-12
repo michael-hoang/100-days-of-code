@@ -66,6 +66,16 @@ def get_spotify_song_uri(song: str) -> str:
     return uri
 
 
+def create_spotify_playlist():
+    """Create a Spotify playlist of the top 100 songs on specified date."""
+
+    playlist_name = f'{date} Billboard 100'
+    description = f'This playlist consists of the top 100 songs on Billboard as of {date}. It was created using Python.'
+    top100_playlist = sp.user_playlist_create(user=USERNAME, name=playlist_name, public=False,
+                                              collaborative=False, description=description)
+    return top100_playlist
+
+
 date = ask_for_date()
 url = f'https://www.billboard.com/charts/hot-100/{date}/'
 response = requests.get(url)
@@ -83,8 +93,4 @@ for song in top100Songs:
     except IndexError:
         print(f'Not on Spotify: {song}')
 
-# Create playlist
-playlist_name = f'{date} Billboard 100'
-description = f'This playlist consists of the top 100 songs on Billboard as of {date}. It was created using Python.'
-top100_playlist = sp.user_playlist_create(user=USERNAME, name=playlist_name, public=False,
-                                          collaborative=False, description=description)
+top100_playlist = create_spotify_playlist()
