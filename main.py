@@ -15,7 +15,7 @@ CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 SCOPE = 'playlist-modify-private'
 CACHE_PATH = 'token.txt'
-USERNAME = os.getenv('USERNAME')
+USER = os.getenv('USER')
 
 
 def ask_for_date() -> str:
@@ -71,7 +71,7 @@ def create_spotify_playlist():
 
     playlist_name = f'{date} Billboard 100'
     description = f'This playlist consists of the top 100 songs on Billboard as of {date}. It was created using Python.'
-    top100_playlist = sp.user_playlist_create(user=USERNAME, name=playlist_name, public=False,
+    top100_playlist = sp.user_playlist_create(user=USER, name=playlist_name, public=False,
                                               collaborative=False, description=description)
     return top100_playlist
 
@@ -94,3 +94,4 @@ for song in top100Songs:
         print(f'Not on Spotify: {song}')
 
 top100_playlist = create_spotify_playlist()
+playlist_id = top100_playlist['id']
