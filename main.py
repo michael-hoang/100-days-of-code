@@ -1,4 +1,6 @@
 import requests
+from bs4 import BeautifulSoup
+
 
 product_url = 'https://www.amazon.com/Orient-Kamasu-Japanese-Automatic-Stainless-Steel/dp/B07QJN1GFX'
 headers = {
@@ -7,4 +9,7 @@ headers = {
 }
 
 response = requests.get(product_url, headers=headers)
-print(response)
+content = response.text
+
+soup = BeautifulSoup(content, 'html.parser')
+print(soup)
