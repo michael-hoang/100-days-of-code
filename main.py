@@ -1,5 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
+import smtplib
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+MY_EMAIL = os.getenv('MY_EMAIL')
+APP_PASSWORD = os.getenv('APP_PASSWORD')
 
 
 product_url = 'https://www.amazon.com/Orient-Kamasu-Japanese-Automatic-Stainless-Steel/dp/B07QJN1GFX'
