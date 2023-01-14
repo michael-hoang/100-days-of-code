@@ -12,4 +12,8 @@ response = requests.get(product_url, headers=headers)
 content = response.text
 
 soup = BeautifulSoup(content, 'html.parser')
-print(soup)
+
+# Get a hold of the span tag that contains the price
+span_tag = soup.select(
+    'div.a-section.a-spacing-none > span > span.a-offscreen')
+print(span_tag)
