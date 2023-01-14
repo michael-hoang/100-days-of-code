@@ -9,6 +9,7 @@ load_dotenv()
 
 MY_EMAIL = os.getenv('MY_EMAIL')
 APP_PASSWORD = os.getenv('APP_PASSWORD')
+TARGET_PRICE = 200
 
 
 product_url = 'https://www.amazon.com/Orient-Kamasu-Japanese-Automatic-Stainless-Steel/dp/B07QJN1GFX'
@@ -29,16 +30,17 @@ span_tag = soup.select(
 price_str = span_tag.string.split('$')[1]
 price_float = float(price_str)
 
-# Send email
-item_name = soup.select(
-    'div#titleSection > h1#title > span#productTitle')[0].string
-page_title = soup.select('title')[0].string.split(
-    'Amazon.com: ')[1].split(' :')[0]
-message = f'Subject: Amazon Price Alert - {item_name}\n\n{page_title} is now ${price_float}\n{product_url}'
+# Send email if market price is equal to or below the target price
+if price_float <= TARGET_PRICE:
+    item_name = soup.select(
+        'div#titleSection > h1#title > span#productTitle')[0].string
+    page_title = soup.select('title')[0].string.split(
+        'Amazon.com: ')[1].split(' :')[0]
+    message = f'Subject: Amazon Price Alert - {item_name}\n\n{page_title} is now ${price_float}\n{product_url}'
 
-with smtplib.SMTP(host='smtp.gmail.com') as connection:
-    connection.ehlo()
-    connection.starttls()
-    connection.ehlo()
-    connection.login(user=MY_EMAIL, password=APP_PASSWORD)
-    connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=message)
+    with smtplib.SMTP(host='smtp.gmail.com') as connection:
+        connection.ehlo()
+        connection.starttls()
+        connection.ehlo()
+        connection.login(user=MY_EMAIL, password=APP_PASSWORD)
+        connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=message)
