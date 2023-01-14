@@ -35,3 +35,10 @@ item_name = soup.select(
 page_title = soup.select('title')[0].string.split(
     'Amazon.com: ')[1].split(' :')[0]
 message = f'Subject: Amazon Price Alert - {item_name}\n\n{page_title} is now ${price_float}\n{product_url}'
+
+with smtplib.SMTP(host='smtp.gmail.com') as connection:
+    connection.ehlo()
+    connection.starttls()
+    connection.ehlo()
+    connection.login(user=MY_EMAIL, password=APP_PASSWORD)
+    connection.sendmail(from_addr=MY_EMAIL, to_addrs=MY_EMAIL, msg=message)
