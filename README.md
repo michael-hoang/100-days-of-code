@@ -6,7 +6,7 @@
 
 https://www.amazon.com/Instant-Pot-Duo-Evo-Plus/dp/B07W55DDFB/ref=sr_1_1?qid=1597662463
 
-<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-08-29-1a29e3ccc29320c315fceef87117cc45.png" width="500">
+<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-08-29-1a29e3ccc29320c315fceef87117cc45.png" width="800">
 
 In addition to the URL, when you browser tries to load up a page in Amazon, it also passes a bunch of other information. e.g. Which browser you're using, which computer you have etc.
 
@@ -20,7 +20,7 @@ http://myhttpheader.com/
 
 HINT 1: You'll need to pass along some headers in order for the request to return the actual website HTML. At minimum you'll need to give your "User-Agent" and "Accept-Language" values in the request header.
 
-<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-30-35-4fd7abb7089f536a3754597b52eb3c06.png" width="500">
+<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-30-35-4fd7abb7089f536a3754597b52eb3c06.png" width="800">
 
 HINT 2: Remember this is how you pass headers with the requests library:
 
@@ -42,7 +42,7 @@ HINT: If you get an error that says "bs4.FeatureNotFound: Couldn't find a tree b
 
 HINT: You might need to use the split() method: https://www.w3schools.com/python/ref_string_split.asp
 
-<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-23-51-5d3130b0f744dcfa1c60da4f30290087.png" width="500">
+<img src="https://img-c.udemycdn.com/redactor/raw/2020-08-17_11-23-51-5d3130b0f744dcfa1c60da4f30290087.png" width="800">
 
 
 ## Step 2 - Email Alert When Price Below Preset Value
@@ -52,14 +52,14 @@ We want to get an email when the price of our product is below a certain value. 
 
 e.g.
 
-<img src='https://img-c.udemycdn.com/redactor/raw/2020-08-17_14-08-04-021aa55beed277eacd92f7713287272e.png' width='500'>
+<img src='https://img-c.udemycdn.com/redactor/raw/2020-08-17_14-08-04-021aa55beed277eacd92f7713287272e.png' width='800'>
 
 HINT: You can test the email by changing the target price to above the current live price of the product, e.g. $200.
 
 
 NOTE: If you have issues and keep getting this error:
 
-<img src='https://img-c.udemycdn.com/redactor/raw/2020-08-17_14-30-39-0e6f2c624557ca955f47a3ef4acef3e0.png' width='400'>
+<img src='https://img-c.udemycdn.com/redactor/raw/2020-08-17_14-30-39-0e6f2c624557ca955f47a3ef4acef3e0.png' width='800'>
 
 1. Make sure you've got the correct smtp address for your email provider:
 
@@ -84,7 +84,7 @@ Below are steps specific to users sending email from Gmail and Yahoo addresses a
 
 3. Add an App Password under your email settings. Select "Other" from the drop-down settings and choose a password. Use this app password in your Python code.
 
-<img src='https://img-c.udemycdn.com/redactor/raw/article_lecture/2022-11-30_12-32-24-4b4467d49c39915c0b9de65e0d43af98.png' width='400'>
+<img src='https://img-c.udemycdn.com/redactor/raw/article_lecture/2022-11-30_12-32-24-4b4467d49c39915c0b9de65e0d43af98.png' width='800'>
 
 4. Add a port number by changing your code to this:
 
