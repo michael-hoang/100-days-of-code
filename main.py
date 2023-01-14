@@ -15,5 +15,7 @@ soup = BeautifulSoup(content, 'html.parser')
 
 # Get a hold of the span tag that contains the price
 span_tag = soup.select(
-    'div.a-section.a-spacing-none > span > span.a-offscreen')
-print(span_tag)
+    'div.a-section.a-spacing-none > span > span.a-offscreen')[0]
+
+price_str = span_tag.string.split('$')[1]
+price_float = float(price_str)
