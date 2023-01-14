@@ -28,3 +28,7 @@ span_tag = soup.select(
 
 price_str = span_tag.string.split('$')[1]
 price_float = float(price_str)
+
+# Send email
+item_name = soup.select(
+    'div#titleSection > h1#title > span#productTitle')[0].string
