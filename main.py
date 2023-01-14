@@ -32,4 +32,6 @@ price_float = float(price_str)
 # Send email
 item_name = soup.select(
     'div#titleSection > h1#title > span#productTitle')[0].string
-page_title = soup.select('title')[0].string.split('Amazon.com: ')[1]
+page_title = soup.select('title')[0].string.split(
+    'Amazon.com: ')[1].split(' :')[0]
+message = f'Subject: Amazon Price Alert - {item_name}\n\n{page_title} is now ${price_float}\n{product_url}'
