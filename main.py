@@ -32,3 +32,4 @@ price_float = float(price_str)
 # Send email
 item_name = soup.select(
     'div#titleSection > h1#title > span#productTitle')[0].string
+page_title = soup.select('title')[0].string.split('Amazon.com: ')[1]
