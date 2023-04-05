@@ -17,14 +17,18 @@ edge_options.add_experimental_option('detach', True)
 driver = webdriver.Edge(service=service, options=edge_options)
 driver.get(url)
 
+action = ActionChains(driver)
 time.sleep(10.0) # Give the game 10 seconds to load before executing program.
 cookie_btn = driver.find_element(By.CSS_SELECTOR, '#bigCookie')
 cursor_div = driver.find_element(By.CSS_SELECTOR, '#product0')
+grandma_div = driver.find_element(By.CSS_SELECTOR, '#product1')
 
 start_time = time.time()
+track_time = start_time
 while True:
     cookie_btn.click()
     current_time = time.time()
-    if start_time - current_time == UPGRADE_EVERY_SECONDS:
-        
-        start_time = current_time
+    cursor_price = int(driver.find_element(By.CSS_SELECTOR, '#productPrice0').text)
+    if current_time - track_time >= UPGRADE_EVERY_SECONDS:
+        action.move_to_element(cursor_div).click().perform()
+        track_time = current_time
