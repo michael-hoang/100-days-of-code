@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
+import time
 
 
 url = 'https://orteil.dashnet.org/cookieclicker/'
@@ -14,4 +15,10 @@ edge_options.add_experimental_option('detach', True)
 driver = webdriver.Edge(service=service, options=edge_options)
 driver.get(url)
 
-cookie_btn = driver.find_element(By.CSS_SELECTOR, '#cookieAnchor #bigCookie')
+time.sleep(10.0) # Give the game 10 seconds to load before executing program.
+cookie_btn = driver.find_element(By.CSS_SELECTOR, '#bigCookie')
+
+while True:
+    cookie_btn.click()
+    
+    
