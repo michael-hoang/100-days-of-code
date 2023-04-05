@@ -13,3 +13,5 @@ edge_options = Options()
 edge_options.add_experimental_option('detach', True)
 driver = webdriver.Edge(service=service, options=edge_options)
 driver.get(url)
+
+cookie_btn = driver.find_element(By.CSS_SELECTOR, '#cookieAnchor #bigCookie')
