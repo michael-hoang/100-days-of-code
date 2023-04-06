@@ -16,3 +16,8 @@ edge_options.add_experimental_option('detach', True)
 driver = webdriver.Edge(service=service, options=edge_options)
 driver.get(url)
 
+email_input = driver.find_element(By.CSS_SELECTOR, '#session_key')
+password_input = driver.find_element(By.CSS_SELECTOR, '#session_password')
+
+email_input.send_keys('myemail')
+password_input.send_keys('mypassword')
