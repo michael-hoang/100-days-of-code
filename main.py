@@ -6,7 +6,7 @@ from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
 import time
 
-UPGRADE_EVERY_SECONDS = 5
+UPGRADE_EVERY_SECONDS = 10
 
 
 def upgrade():
@@ -34,7 +34,7 @@ time.sleep(10.0)  # Give the game 10 seconds to load before executing program.
 cookie_btn = driver.find_element(By.CSS_SELECTOR, '#bigCookie')
 start_time = time.time()
 track_time = start_time
-while True:
+while track_time - start_time <= 600: # 10 minutes
     cookie_btn.click()
     current_time = time.time()
     if current_time - track_time >= UPGRADE_EVERY_SECONDS:
