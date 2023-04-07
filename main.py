@@ -47,8 +47,9 @@ def search_job(job_name: str):
 def check_for_entry_level_jobs(job_element) -> bool:
     """Return True if Entry Level is in the job description."""
     job_link = job_element.find_element(By.CSS_SELECTOR, 'a')
-    job_link.click()
     time.sleep(1)
+    job_link.click()
+    time.sleep(2)
     job_level_ele = driver.find_element(
         By.CSS_SELECTOR, '.jobs-unified-top-card__job-insight span'
     )
@@ -65,7 +66,7 @@ def save_job():
         save_btn.click()
 
 
-def scroll_down_job_listing():
+def scroll_down_job_listing(scroll_range: int):
     """Scroll down job listing panel."""
     driver.execute_script(
         f'document.querySelector(".jobs-search-results-list").scrollTo(0, {scroll_range});'
@@ -84,9 +85,21 @@ def save_all_entry_jobs_on_page():
     for job_element in job_listings:
         if check_for_entry_level_jobs(job_element):
             save_job()
-        scroll_down_job_listing()
+        scroll_down_job_listing(scroll_range)
         scroll_range += 110
         time.sleep(2)
+
+
+def go_to_page_number(page_num):
+    """Click on a specified page number."""
+    if page_num == '9':
+        page_num = '...'
+    page_num_span = driver.find_element(
+        By.XPATH, f'//span[contains(text(), "{page_num}")]'
+    )
+    page_num_btn = page_num_span.find_element(
+        By.XPATH, '..')  # Select parent element
+    page_num_btn.click()
 
 
 service = Service(WEBDRIVER_PATH)
@@ -109,4 +122,9 @@ time.sleep(2)
 search_job('python developer')
 time.sleep(2)
 
-save_all_entry_jobs_on_page()
+page_num = 2
+while page_num <= 15:
+    save_all_entry_jobs_on_page()
+    go_to_page_number(page_num)
+    page_num += 1
+    time.sleep(1)
