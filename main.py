@@ -57,7 +57,7 @@ def check_for_entry_level_jobs(job_element) -> bool:
         return True
 
 
-def save_job(job_element):
+def save_job():
     """Click on 'Save' if the job is not yet saved."""
     save_btn = driver.find_element(
         By.CSS_SELECTOR, 'button.jobs-save-button span')
@@ -72,33 +72,41 @@ def scroll_down_job_listing():
     )
 
 
+def save_all_entry_jobs_on_page():
+    """
+    Loop through each job listings on the page and save entry level jobs to
+    favorites.
+    """
+    job_listings = driver.find_elements(
+        By.CSS_SELECTOR, 'ul.scaffold-layout__list-container li.ember-view'
+    )
+    scroll_range = 110
+    for job_element in job_listings:
+        if check_for_entry_level_jobs(job_element):
+            save_job()
+        scroll_down_job_listing()
+        scroll_range += 110
+        time.sleep(2)
+
+
 service = Service(WEBDRIVER_PATH)
 edge_options = Options()
 edge_options.add_experimental_option('detach', True)
 driver = webdriver.Edge(service=service, options=edge_options)
 driver.get(URL)
+time.sleep(2)  # Allow page to load
 
-time.sleep(3)  # Allow page to load
 try:
     sign_in()
 except:
     sign_in_authwall = driver.find_element(By.LINK_TEXT, 'Sign in')
     sign_in_authwall.click()
+    time.sleep(2)
     sign_in()
 
 navigate_to_job_page()
-time.sleep(3)
+time.sleep(2)
 search_job('python developer')
-time.sleep(3)
+time.sleep(2)
 
-# Get job listings
-job_listings = driver.find_elements(
-    By.CSS_SELECTOR, 'ul.scaffold-layout__list-container li.ember-view'
-)
-scroll_range = 100
-for job_element in job_listings:
-    if check_for_entry_level_jobs(job_element):
-        save_job(job_element)
-    scroll_down_job_listing()
-    scroll_range += 100
-    time.sleep(2)
+save_all_entry_jobs_on_page()
