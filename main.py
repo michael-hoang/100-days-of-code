@@ -10,7 +10,7 @@ from selenium.webdriver.edge.options import Options
 
 
 class ExtendExpiryBot:
-    def __init__(self, driver_path):
+    def __init__(self, driver_path, mode='default'):
         """
         A class for automating expiry renewal on Pythonanywhere using Selenium.
         (Only for Edge browsers)
@@ -19,7 +19,8 @@ class ExtendExpiryBot:
             service (selenium.webdriver.service): Responsible for starting and 
                 stoping web browser driver.
             options (seleniuim.webdriver.options): Determine various properties
-                of the web browser driver.
+                of the web browser driver. Mode is set to 'Default'. Can change
+                to 'headless'.
             driver (selenium.webdriver): The web browser driver to use.
             website_url (str): The URL of the website to interact with
                 (https://www.pythonanywhere.com/).
@@ -30,7 +31,11 @@ class ExtendExpiryBot:
         """
         self.service = Service(driver_path)
         self.options = Options()
-        self.options.add_experimental_option('detach', True)
+        if mode == 'headless':
+            self._headless_mode()
+        elif mode == 'default':
+            self.options.add_experimental_option('detach', True)
+
         self.driver = webdriver.Edge(
             service=self.service, options=self.options
         )
@@ -70,6 +75,10 @@ class ExtendExpiryBot:
         logout_btn = self.driver.find_element(By.CSS_SELECTOR, '.logout_link')
         logout_btn.click()
 
+    def _headless_mode(self):
+        """Runs the web browser in headless mode."""
+        self.options.add_argument('--headless')
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -80,7 +89,7 @@ if __name__ == '__main__':
     PASSWORD = os.environ.get('PASSWORD')
 
     webdriver_path = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
-    expBot = ExtendExpiryBot(webdriver_path)
+    expBot = ExtendExpiryBot(webdriver_path, mode='headless')
     expBot.open_website()
     time.sleep(2)
     expBot.go_to_login_page()
