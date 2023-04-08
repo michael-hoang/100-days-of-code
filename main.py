@@ -59,6 +59,17 @@ class ExtendExpiryBot:
         tasks = self.driver.find_element(By.ID, 'id_tasks_link')
         tasks.click()
 
+    def extend_expiry(self):
+        """Click on the Extend expiry button."""
+        extend_expiry_btn = self.driver.find_element(
+            By.CSS_SELECTOR, 'button.extend_scheduled_task')
+        extend_expiry_btn.click()
+
+    def log_out(self):
+        """Log out from the website."""
+        logout_btn = self.driver.find_element(By.CSS_SELECTOR, '.logout_link')
+        logout_btn.click()
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -69,12 +80,15 @@ if __name__ == '__main__':
     PASSWORD = os.environ.get('PASSWORD')
 
     webdriver_path = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
-    eeb = ExtendExpiryBot(webdriver_path)
-    eeb.open_website()
+    expBot = ExtendExpiryBot(webdriver_path)
+    expBot.open_website()
     time.sleep(2)
-    eeb.go_to_login_page()
+    expBot.go_to_login_page()
+    time.sleep(1)
+    expBot.sign_in(USER, PASSWORD)
+    time.sleep(4)
+    expBot.go_to_tasks_page()
     time.sleep(2)
-    eeb.sign_in(USER, PASSWORD)
-    time.sleep(5)
-    eeb.go_to_tasks_page()
-    time.sleep(3)
+    expBot.extend_expiry()
+    time.sleep(1)
+    expBot.log_out()
