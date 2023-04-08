@@ -54,6 +54,11 @@ class ExtendExpiryBot:
         login_btn = self.driver.find_element(By.ID, 'id_next')
         login_btn.click()
 
+    def go_to_tasks_page(self):
+        """Navigate to Tasks page."""
+        tasks = self.driver.find_element(By.ID, 'id_tasks_link')
+        tasks.click()
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -64,9 +69,12 @@ if __name__ == '__main__':
     PASSWORD = os.environ.get('PASSWORD')
 
     webdriver_path = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
-    exp_renewal_bot = ExtendExpiryBot(webdriver_path)
-    exp_renewal_bot.open_website()
+    eeb = ExtendExpiryBot(webdriver_path)
+    eeb.open_website()
     time.sleep(2)
-    exp_renewal_bot.go_to_login_page()
+    eeb.go_to_login_page()
     time.sleep(2)
-    exp_renewal_bot.sign_in(USER, PASSWORD)
+    eeb.sign_in(USER, PASSWORD)
+    time.sleep(5)
+    eeb.go_to_tasks_page()
+    time.sleep(3)
