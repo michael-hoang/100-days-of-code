@@ -15,3 +15,10 @@ URL = 'https://www.pythonanywhere.com/'
 WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
 USER = os.environ.get('USER')
 PASSWORD = os.environ.get('PASSWORD')
+
+service = Service(WEBDRIVER_PATH)
+edge_options = Options()
+edge_options.add_experimental_option('detach', True)
+driver = webdriver.Edge(service=service, options=edge_options)
+driver.get(URL)
+time.sleep(2)
