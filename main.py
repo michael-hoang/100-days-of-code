@@ -28,6 +28,18 @@ class ExtendExpiryBot:
         Methods:
             __init__(self, driver, website_url):
                 Constructs the ExtendExpiryBot object.
+            open_website(self):
+                Opens the website_url in the web browser.
+            go_to_login_page(self):
+                Navigate to the login page.
+            sign_in(self, username, password):
+                Sign the user into the website.
+            go_to_tasks_page(self):
+                Navigate to Tasks page.
+            extend_expiry(self):
+                Click on the Extend expiry button.
+            log_out(self):
+                Log out from the website.
         """
         self.service = Service(driver_path)
         self.options = Options()
