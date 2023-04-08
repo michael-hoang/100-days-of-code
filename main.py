@@ -42,8 +42,17 @@ class ExtendExpiryBot:
 
     def go_to_login_page(self):
         """Navigate to the login page."""
-        login_el = self.driver.find_element(By.LINK_TEXT, 'Log in')
-        login_el.click()
+        login = self.driver.find_element(By.LINK_TEXT, 'Log in')
+        login.click()
+
+    def sign_in(self, username: str, password: str):
+        """Sign the user into the website."""
+        username_input = self.driver.find_element(By.NAME, 'auth-username')
+        username_input.send_keys(username)
+        password_input = self.driver.find_element(By.NAME, 'auth-password')
+        password_input.send_keys(password)
+        login_btn = self.driver.find_element(By.ID, 'id_next')
+        login_btn.click()
 
 
 if __name__ == '__main__':
@@ -59,3 +68,5 @@ if __name__ == '__main__':
     exp_renewal_bot.open_website()
     time.sleep(2)
     exp_renewal_bot.go_to_login_page()
+    time.sleep(2)
+    exp_renewal_bot.sign_in(USER, PASSWORD)
