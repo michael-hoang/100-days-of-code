@@ -1,3 +1,7 @@
+import os
+
+from dotenv import load_dotenv
+
 
 class TwitterComplaintBot:
     """
@@ -6,8 +10,23 @@ class TwitterComplaintBot:
     internet speed guaranteed by the ISP.
     """
 
+    def __init__(
+            self,
+            promised_down,
+            promised_up,
+            driver_path,
+            twitter_email,
+            twitter_password
+    ):
+        """Initialize browser driver."""
 
-if __name__ == '__main__':    
-    PROMISED_DOWN = 
-    PROMISED_UP = 
-    DRIVER_PATH = 
+
+if __name__ == '__main__':
+    load_dotenv()
+
+    TWITTER_EMAIL = os.getenv('EMAIL')
+    TWITTER_PASSWORD = os.getenv('PASSWORD')
+
+    tcp = TwitterComplaintBot
+    
+    
