@@ -34,6 +34,14 @@ class InternetSpeedTwitterBot:
         self.promised_down = promised_down
         self.promised_up = promised_up
 
+    def visit_website(self, url):
+        """Visit the website URL using Selenium webdriver."""
+        self.driver.get(url)
+
+    def log_in_website(self, login_handle, login_password):
+        """Log in to the website."""
+        
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -45,7 +53,7 @@ if __name__ == '__main__':
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     TWITTER_LOGIN_URL = 'https://twitter.com/login'
-    PROMISED_DOWN = 150 # Mbps download
-    PROMISED_UP = 10 # Mbps upload
+    PROMISED_DOWN = 150  # Mbps download
+    PROMISED_UP = 10  # Mbps upload
 
     tcp = InternetSpeedTwitterBot
