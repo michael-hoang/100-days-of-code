@@ -20,6 +20,7 @@ class TwitterComplaintBot:
             promised_down,
             promised_up,
             driver_path,
+            twitter_login_url,
             twitter_email,
             twitter_password
     ):
@@ -41,5 +42,6 @@ if __name__ == '__main__':
     TWITTER_PASSWORD = os.getenv('PASSWORD')
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
+    TWITTER_LOGIN_URL = 'https://twitter.com/login'
 
     tcp = TwitterComplaintBot
