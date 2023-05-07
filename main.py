@@ -8,7 +8,7 @@ from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
 
 
-class TwitterComplaintBot:
+class InternetSpeedTwitterBot:
     """
     A class representing a Twitter bot that complains to the user's ISP on
     Twitter if the user's current internet speed doesn't match at least the
@@ -31,6 +31,8 @@ class TwitterComplaintBot:
         self.driver = webdriver.Edge(
             service=self.service, options=self.options
         )
+        self.promised_down = promised_down
+        self.promised_up = promised_up
 
 
 if __name__ == '__main__':
@@ -43,5 +45,7 @@ if __name__ == '__main__':
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     TWITTER_LOGIN_URL = 'https://twitter.com/login'
+    PROMISED_DOWN = 150 # Mbps download
+    PROMISED_UP = 10 # Mbps upload
 
-    tcp = TwitterComplaintBot
+    tcp = InternetSpeedTwitterBot
