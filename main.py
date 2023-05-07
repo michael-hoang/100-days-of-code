@@ -1,6 +1,11 @@
 import os
+import time
 
 from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
 
 
 class TwitterComplaintBot:
@@ -20,12 +25,18 @@ class TwitterComplaintBot:
     ):
         """Initialize browser driver."""
 
+        self.service = Service(driver_path)
+        self.options = Options()
 
 if __name__ == '__main__':
+    # Load environment variables from .env file
     load_dotenv()
 
+    # Get environment variables
     TWITTER_EMAIL = os.getenv('EMAIL')
     TWITTER_PASSWORD = os.getenv('PASSWORD')
+
+    WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
 
     tcp = TwitterComplaintBot
     
