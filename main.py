@@ -27,6 +27,10 @@ class TwitterComplaintBot:
 
         self.service = Service(driver_path)
         self.options = Options()
+        self.driver = webdriver.Edge(
+            service=self.service, options=self.options
+        )
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -39,5 +43,3 @@ if __name__ == '__main__':
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
 
     tcp = TwitterComplaintBot
-    
-    
