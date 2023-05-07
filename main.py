@@ -40,7 +40,6 @@ class InternetSpeedTwitterBot:
 
     def log_in_website(self, login_handle, login_password):
         """Log in to the website."""
-        
 
 
 if __name__ == '__main__':
@@ -56,4 +55,11 @@ if __name__ == '__main__':
     PROMISED_DOWN = 150  # Mbps download
     PROMISED_UP = 10  # Mbps upload
 
-    tcp = InternetSpeedTwitterBot
+    tcp = InternetSpeedTwitterBot(
+        promised_down=PROMISED_DOWN,
+        promised_up=PROMISED_UP,
+        driver_path=WEBDRIVER_PATH,
+        twitter_login_url=TWITTER_LOGIN_URL,
+        twitter_email=TWITTER_EMAIL,
+        twitter_password=TWITTER_PASSWORD
+    )
