@@ -38,8 +38,10 @@ class InternetSpeedTwitterBot:
         self.promised_up = promised_up
 
         self.visit_website(twitter_login_url)
-        time.sleep(3)
+        time.sleep(2)
         self.log_in_website(twitter_email, twitter_password, twitter_username)
+        time.sleep(2)
+        self.skip_turn_on_notifications
 
     def visit_website(self, url):
         """Visit the website URL using Selenium webdriver."""
@@ -90,6 +92,16 @@ class InternetSpeedTwitterBot:
                 By.XPATH, '//*[ text() = "Log in" ]'
             )
             login_btn.click()
+
+    def skip_turn_on_notifications(self):
+        """Select 'Skip for now' if prompted to turn on notifications."""
+        try:
+            skip_btn = self.driver.find_element(
+                By.XPATH, '//*[ text() = "Skip for now"]'
+            )
+            skip_btn.click()
+        except NoSuchElementException:
+            return
 
 
 if __name__ == '__main__':
