@@ -1,8 +1,8 @@
 import os
-import time
 
 from dotenv import load_dotenv
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
@@ -21,6 +21,7 @@ class InternetSpeedTwitterBot:
             promised_up,
             driver_path,
             twitter_login_url,
+            twitter_username,
             twitter_email,
             twitter_password
     ):
@@ -28,18 +29,49 @@ class InternetSpeedTwitterBot:
 
         self.service = Service(driver_path)
         self.options = Options()
+        self.options.add_experimental_option('detach', True)
         self.driver = webdriver.Edge(
             service=self.service, options=self.options
         )
+        self.driver.implicitly_wait(10)
         self.promised_down = promised_down
         self.promised_up = promised_up
+
+        self.visit_website(twitter_login_url)
+        self.log_in_website(twitter_email, twitter_password)
 
     def visit_website(self, url):
         """Visit the website URL using Selenium webdriver."""
         self.driver.get(url)
 
-    def log_in_website(self, login_handle, login_password):
+    def _check_for_unusual_login_activity(self, username):
+        """Resolve any unusual login activity."""
+        try:
+            verification = self.driver.find_element(
+                By.XPATH, '//*[ text() = "Phone or username"]'
+            )
+            if verification:
+                phone_username_input = self.driver.find_element(
+                    By.CSS_SELECTOR, 'input'
+                )
+                phone_username_input.send_keys(username)
+                next_btn = self.driver.find_element(
+                    By.XPATH, '//*[ text() = "Next" ]'
+                )
+                next_btn.click()
+        except NoSuchElementException:
+            pass
+
+    def log_in_website(self, login_handle, login_password, username):
         """Log in to the website."""
+        login_handle_input = self.driver.find_element(By.CSS_SELECTOR, 'input')
+        login_handle_input.send_keys(login_handle)
+        next_btn = self.driver.find_element(By.XPATH, '//*[ text() = "Next" ]')
+        next_btn.click()
+        self._check_for_unusual_login_activity(username)
+        password_input = self.driver.find_element(By.CSS_SELECTOR, 'input')
+        password_input.send_keys(login_password)
+        next_btn.click()
 
 
 if __name__ == '__main__':
@@ -49,6 +81,7 @@ if __name__ == '__main__':
     # Get environment variables
     TWITTER_EMAIL = os.getenv('EMAIL')
     TWITTER_PASSWORD = os.getenv('PASSWORD')
+    TWITTER_USERNAME = os.getenv('USERNAME')
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     TWITTER_LOGIN_URL = 'https://twitter.com/login'
@@ -60,6 +93,7 @@ if __name__ == '__main__':
         promised_up=PROMISED_UP,
         driver_path=WEBDRIVER_PATH,
         twitter_login_url=TWITTER_LOGIN_URL,
+        twitter_username=TWITTER_USERNAME,
         twitter_email=TWITTER_EMAIL,
         twitter_password=TWITTER_PASSWORD
     )
