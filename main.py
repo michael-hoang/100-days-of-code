@@ -161,3 +161,4 @@ if __name__ == '__main__':
         tbot.skip_turn_on_notifications
         time.sleep(2)
         tbot.tweet_at_provider(dl_speed, ul_speed)
+        tbot.driver.quit()
