@@ -18,7 +18,7 @@ class InternetSpeedTwitterBot:
     internet speed guaranteed by the ISP.
     """
 
-    def __init__(self, driver_path):
+    def __init__(self, driver_path, promised_down, promised_up):
         """Initialize browser driver."""
         self.service = Service(driver_path)
         self.options = Options()
@@ -26,6 +26,8 @@ class InternetSpeedTwitterBot:
         self.driver = webdriver.Edge(
             service=self.service, options=self.options
         )
+        self.down = promised_down
+        self.up = promised_up
 
     def visit_website(self, url):
         """Visit the website URL using Selenium webdriver."""
@@ -59,6 +61,8 @@ class InternetSpeedTwitterBot:
                 login_btn.click()
         except NoSuchElementException:
             return False
+
+        return True
 
     def log_in_website(self, login_handle, login_password, login_username):
         """Log in to the website."""
@@ -113,8 +117,20 @@ class InternetSpeedTwitterBot:
 
         return float(dl_speed), float(ul_speed)
 
-    def tweet_at_provider(self):
-        pass
+    def tweet_at_provider(self, dl_speed, ul_speed):
+        header_ele = self.driver.find_element(By.CSS_SELECTOR, 'header')
+        tweet_btn = header_ele.find_element(
+            By.XPATH, '//*[ text() = "Tweet"]'
+        )
+        tweet_btn.click()
+        time.sleep(2)
+        tweet = f'Hey Internet Provider, why is my internet speed {dl_speed}down/{ul_speed}up when I pay for {self.down}down/{self.up}up? (Day 51 of 100 Days of Code)'
+        focused_element = self.driver.switch_to.active_element
+        focused_element.send_keys(tweet)
+        tweet_btn = header_ele.find_element(
+            By.XPATH, '//*[ text() = "Tweet"]'
+        )
+        tweet_btn.click()
 
 
 if __name__ == '__main__':
@@ -128,17 +144,20 @@ if __name__ == '__main__':
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     TWITTER_LOGIN_URL = 'https://twitter.com/login'
-    PROMISED_DOWN = 80  # Mbps download
-    PROMISED_UP = 20  # Mbps upload
+    PROMISED_DOWN = 100  # Mbps download
+    PROMISED_UP = 25  # Mbps upload
 
     tbot = InternetSpeedTwitterBot(
-        driver_path=WEBDRIVER_PATH
+        driver_path=WEBDRIVER_PATH,
+        promised_down=PROMISED_DOWN,
+        promised_up=PROMISED_UP
     )
     dl_speed, ul_speed = tbot.get_internet_speed()
-    print(dl_speed, ul_speed)
     if dl_speed < PROMISED_DOWN or ul_speed < PROMISED_UP:
         tbot.visit_website(TWITTER_LOGIN_URL)
         time.sleep(2)
         tbot.log_in_website(TWITTER_EMAIL, TWITTER_PASSWORD, TWITTER_USERNAME)
         time.sleep(2)
         tbot.skip_turn_on_notifications
+        time.sleep(2)
+        tbot.tweet_at_provider(dl_speed, ul_speed)
