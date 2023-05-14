@@ -7,6 +7,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class InternetSpeedTwitterBot:
@@ -16,22 +18,14 @@ class InternetSpeedTwitterBot:
     internet speed guaranteed by the ISP.
     """
 
-    def __init__(
-            self,
-            promised_down,
-            promised_up,
-            driver_path,
-    ):
+    def __init__(self, driver_path):
         """Initialize browser driver."""
-
         self.service = Service(driver_path)
         self.options = Options()
         self.options.add_experimental_option('detach', True)
         self.driver = webdriver.Edge(
             service=self.service, options=self.options
         )
-        self.promised_down = promised_down
-        self.promised_up = promised_up
 
     def visit_website(self, url):
         """Visit the website URL using Selenium webdriver."""
@@ -94,7 +88,30 @@ class InternetSpeedTwitterBot:
             return
 
     def get_internet_speed(self):
-        pass
+        """
+        Run internet speed test and return a tuple containing the download and upload speeds.
+        """
+        self.visit_website('https://www.speedtest.net/')
+        go_btn = self.driver.find_element(
+            By.CSS_SELECTOR, 'span.start-text'
+        )
+        time.sleep(2)
+        go_btn.click()
+
+        WebDriverWait(self.driver, 120).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, 'div.audience-survey')
+            )
+        )
+
+        dl_speed = self.driver.find_element(
+            By.CSS_SELECTOR, 'span.download-speed'
+        ).text
+        ul_speed = self.driver.find_element(
+            By.CSS_SELECTOR, 'span.upload-speed'
+        ).text
+
+        return float(dl_speed), float(ul_speed)
 
     def tweet_at_provider(self):
         pass
@@ -111,20 +128,17 @@ if __name__ == '__main__':
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     TWITTER_LOGIN_URL = 'https://twitter.com/login'
-    PROMISED_DOWN = 150  # Mbps download
-    PROMISED_UP = 10  # Mbps upload
+    PROMISED_DOWN = 80  # Mbps download
+    PROMISED_UP = 20  # Mbps upload
 
     tbot = InternetSpeedTwitterBot(
-        promised_down=PROMISED_DOWN,
-        promised_up=PROMISED_UP,
-        driver_path=WEBDRIVER_PATH,
-        twitter_login_url=TWITTER_LOGIN_URL,
-        twitter_username=TWITTER_USERNAME,
-        twitter_email=TWITTER_EMAIL,
-        twitter_password=TWITTER_PASSWORD
+        driver_path=WEBDRIVER_PATH
     )
-    tbot.visit_website(TWITTER_LOGIN_URL)
-    time.sleep(2)
-    tbot.log_in_website(TWITTER_EMAIL, TWITTER_PASSWORD, TWITTER_USERNAME)
-    time.sleep(2)
-    tbot.skip_turn_on_notifications
+    dl_speed, ul_speed = tbot.get_internet_speed()
+    print(dl_speed, ul_speed)
+    if dl_speed < PROMISED_DOWN or ul_speed < PROMISED_UP:
+        tbot.visit_website(TWITTER_LOGIN_URL)
+        time.sleep(2)
+        tbot.log_in_website(TWITTER_EMAIL, TWITTER_PASSWORD, TWITTER_USERNAME)
+        time.sleep(2)
+        tbot.skip_turn_on_notifications
