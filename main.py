@@ -21,10 +21,6 @@ class InternetSpeedTwitterBot:
             promised_down,
             promised_up,
             driver_path,
-            twitter_login_url,
-            twitter_username,
-            twitter_email,
-            twitter_password
     ):
         """Initialize browser driver."""
 
@@ -36,12 +32,6 @@ class InternetSpeedTwitterBot:
         )
         self.promised_down = promised_down
         self.promised_up = promised_up
-
-        self.visit_website(twitter_login_url)
-        time.sleep(2)
-        self.log_in_website(twitter_email, twitter_password, twitter_username)
-        time.sleep(2)
-        self.skip_turn_on_notifications
 
     def visit_website(self, url):
         """Visit the website URL using Selenium webdriver."""
@@ -103,6 +93,12 @@ class InternetSpeedTwitterBot:
         except NoSuchElementException:
             return
 
+    def get_internet_speed(self):
+        pass
+
+    def tweet_at_provider(self):
+        pass
+
 
 if __name__ == '__main__':
     # Load environment variables from .env file
@@ -118,7 +114,7 @@ if __name__ == '__main__':
     PROMISED_DOWN = 150  # Mbps download
     PROMISED_UP = 10  # Mbps upload
 
-    tcp = InternetSpeedTwitterBot(
+    tbot = InternetSpeedTwitterBot(
         promised_down=PROMISED_DOWN,
         promised_up=PROMISED_UP,
         driver_path=WEBDRIVER_PATH,
@@ -127,3 +123,8 @@ if __name__ == '__main__':
         twitter_email=TWITTER_EMAIL,
         twitter_password=TWITTER_PASSWORD
     )
+    tbot.visit_website(TWITTER_LOGIN_URL)
+    time.sleep(2)
+    tbot.log_in_website(TWITTER_EMAIL, TWITTER_PASSWORD, TWITTER_USERNAME)
+    time.sleep(2)
+    tbot.skip_turn_on_notifications
