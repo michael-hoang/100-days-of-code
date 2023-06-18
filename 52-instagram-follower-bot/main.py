@@ -11,10 +11,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-class InstagramBot:
+class InstaFollower:
     """
     Instagram bot that follows other people's followers.
     """
+
 
 
 if __name__ == '__main__':
@@ -22,5 +23,9 @@ if __name__ == '__main__':
     load_dotenv()
 
     # Get environment variables
-    USERNAME = os.getenv()
-    PASSWORD = os.getenv()
+    USERNAME = os.getenv('USERNAME')
+    PASSWORD = os.getenv('PASSWORD')
+
+    WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
+    SIMILAR_ACCOUNT = 'blackpinkofficial'
+    
