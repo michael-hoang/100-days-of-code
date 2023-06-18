@@ -25,8 +25,9 @@ class InstaFollower:
             service=self.service, options=self.options
         )
 
-    def login(self):
+    def login(self, url):
         """Log in to Instagram."""
+        self.driver.get(url)
 
     def find_followers(self):
         """Look for followers from another account."""
@@ -44,8 +45,10 @@ if __name__ == '__main__':
     PASSWORD = os.getenv('PASSWORD')
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
+    URL = 'https://www.instagram.com/'
     SIMILAR_ACCOUNT = 'blackpinkofficial'
 
     bot = InstaFollower(
         driver_path=WEBDRIVER_PATH
     )
+    bot.login(URL)
