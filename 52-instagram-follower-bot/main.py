@@ -16,6 +16,23 @@ class InstaFollower:
     Instagram bot that follows other people's followers.
     """
 
+    def __init__(self, driver_path):
+        """Initialize browser driver."""
+        self.service = Service(driver_path)
+        self.options = Options()
+        self.options.add_experimental_option('detach', True)
+        self.driver = webdriver.Edge(
+            service=self.service, options=self.options
+        )
+
+    def login(self):
+        """Log in to Instagram."""
+
+    def find_followers(self):
+        """Look for followers from another account."""
+
+    def follow(self):
+        """Follow the person's Instagram account."""
 
 
 if __name__ == '__main__':
@@ -28,4 +45,7 @@ if __name__ == '__main__':
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
     SIMILAR_ACCOUNT = 'blackpinkofficial'
-    
+
+    bot = InstaFollower(
+        driver_path=WEBDRIVER_PATH
+    )
