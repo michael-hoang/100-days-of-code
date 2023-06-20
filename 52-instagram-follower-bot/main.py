@@ -3,12 +3,10 @@ import time
 
 from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 class InstaFollower:
@@ -34,7 +32,7 @@ class InstaFollower:
         password_input = self.driver.find_element(By.NAME, 'password')
         password_input.send_keys(password)
         login_btn = self.driver.find_element(
-            By.XPATH, '//*[@id="loginForm"]/div/div[3]/button'
+            By.XPATH, '//div[text()="Log in"]'
         )
         login_btn.click()
 
@@ -50,13 +48,27 @@ class InstaFollower:
         else:
             not_now_btn.click()
 
-    def find_followers(self):
+    def find_followers(self, similar_account):
         """Look for followers from another account."""
-        search_btn = self.driver.find_element(By.XPATH, '//*[@id="mount_0_0_Em"]/div/div/div[2]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]/div[2]/span/div/a')
-        search_btn.click()
+        self.driver.get(
+            f'https://www.instagram.com/{similar_account}/followers/')
 
     def follow(self):
         """Follow the person's Instagram account."""
+        follow_btns = self.driver.find_elements(
+            By.XPATH, '//div[text()="Follow"]'
+        )
+
+        for follow_btn in follow_btns:
+            try:
+                follow_btn.click()
+                time.sleep(1)
+            except ElementClickInterceptedException:
+                # cancel_btn = self.driver.find_element(
+                #     By.XPATH, ''
+                # )
+                # cancel_btn.click()
+                pass
 
 
 if __name__ == '__main__':
@@ -77,3 +89,9 @@ if __name__ == '__main__':
     bot.login(URL, USERNAME, PASSWORD)
     time.sleep(3)
     bot.check_turn_on_notifications()
+
+    while True:
+        time.sleep(2)
+        bot.find_followers(SIMILAR_ACCOUNT)
+        time.sleep(4)
+        bot.follow()
