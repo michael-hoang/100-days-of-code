@@ -25,12 +25,35 @@ class InstaFollower:
             service=self.service, options=self.options
         )
 
-    def login(self, url):
+    def login(self, url, username, password):
         """Log in to Instagram."""
         self.driver.get(url)
+        time.sleep(4)
+        username_input = self.driver.find_element(By.NAME, 'username')
+        username_input.send_keys(username)
+        password_input = self.driver.find_element(By.NAME, 'password')
+        password_input.send_keys(password)
+        login_btn = self.driver.find_element(
+            By.XPATH, '//*[@id="loginForm"]/div/div[3]/button'
+        )
+        login_btn.click()
+
+    def check_turn_on_notifications(self):
+        """Clear the Turn on Notifications window, if present."""
+        try:
+            not_now_btn = self.driver.find_element(
+                By.XPATH, '//button[text()="Not Now"]'
+            )
+            print(not_now_btn)
+        except NoSuchElementException:
+            return
+        else:
+            not_now_btn.click()
 
     def find_followers(self):
         """Look for followers from another account."""
+        search_btn = self.driver.find_element(By.XPATH, '//*[@id="mount_0_0_Em"]/div/div/div[2]/div/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]/div[2]/span/div/a')
+        search_btn.click()
 
     def follow(self):
         """Follow the person's Instagram account."""
@@ -41,7 +64,7 @@ if __name__ == '__main__':
     load_dotenv()
 
     # Get environment variables
-    USERNAME = os.getenv('USERNAME')
+    USERNAME = os.getenv('LOGIN_USERNAME')
     PASSWORD = os.getenv('PASSWORD')
 
     WEBDRIVER_PATH = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
@@ -51,4 +74,6 @@ if __name__ == '__main__':
     bot = InstaFollower(
         driver_path=WEBDRIVER_PATH
     )
-    bot.login(URL)
+    bot.login(URL, USERNAME, PASSWORD)
+    time.sleep(3)
+    bot.check_turn_on_notifications()
