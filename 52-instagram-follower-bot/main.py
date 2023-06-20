@@ -3,7 +3,7 @@ import time
 
 from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
@@ -58,17 +58,9 @@ class InstaFollower:
         follow_btns = self.driver.find_elements(
             By.XPATH, '//div[text()="Follow"]'
         )
-
         for follow_btn in follow_btns:
-            try:
-                follow_btn.click()
-                time.sleep(1)
-            except ElementClickInterceptedException:
-                # cancel_btn = self.driver.find_element(
-                #     By.XPATH, ''
-                # )
-                # cancel_btn.click()
-                pass
+            follow_btn.click()
+            time.sleep(1)
 
 
 if __name__ == '__main__':
