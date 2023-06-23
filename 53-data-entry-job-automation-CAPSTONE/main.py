@@ -47,8 +47,15 @@ class EdgeBrowserBot:
 
 
 class ZillowParser:
+    """
+    A parser that extracts house listings from a Zillow webpage.
+    """
     def __init__(self):
         self.parser = None
+
+    def set_parser(self, html: str):
+        """Set a BeautifulSoup object from an HTML code."""
+        self.parser = BeautifulSoup(html, 'html.parser')
 
 
 class ZillowHouseScraper:
@@ -65,14 +72,6 @@ class ZillowHouseScraper:
         self.prices = []
         self.addresses = []
 
-    def create_parser(self) -> BeautifulSoup:
-        """Return BeautifulSoup object from zillow_url."""
-        try:
-            html = self._get_full_dynamic_html()
-            return BeautifulSoup(html, 'html.parser')
-        except Exception as e:
-            print(f'Unable to create parser from zillow_url.\n{e}')
-
     def get_house_listings(self):
         """
         Parse for house listings in the form of article tags.
@@ -88,4 +87,6 @@ if __name__ == '__main__':
     zillow_url = 'https://www.zillow.com/orange-county-ca/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22mapBounds%22%3A%7B%22north%22%3A34.1212772497386%2C%22east%22%3A-116.96606875585937%2C%22south%22%3A33.15862901775036%2C%22west%22%3A-118.57281924414062%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A1286%2C%22regionType%22%3A4%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22price%22%3A%7B%22max%22%3A850000%7D%2C%22beds%22%3A%7B%22min%22%3A1%7D%2C%22mp%22%3A%7B%22max%22%3A4273%7D%2C%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%7D'
     # zhs = ZillowHouseScraper(webdriver_path, zillow_url)
     bot = EdgeBrowserBot()
-    bot.get_html(zillow_url)
+    html = bot.get_html(zillow_url)
+    parser = ZillowParser()
+    parser.set_parser(html)
