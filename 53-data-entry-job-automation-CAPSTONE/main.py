@@ -1,5 +1,4 @@
 import os
-import requests
 import time
 
 from bs4 import BeautifulSoup
@@ -11,6 +10,14 @@ from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
 
 
+class EdgeBrowserBot:
+    """
+    A bot that controls Edge browser. It is capable of extracting fully dynamic
+    HTML source code, filling out Google form, and exporting data to Google Sheets.
+    """
+    def __init__(self):
+        self.driver = None
+
 class ZillowHouseScraper:
     """
     Scraper for Zillow house listings that exports data to Google sheet via Google form.
@@ -20,14 +27,10 @@ class ZillowHouseScraper:
         google_form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSdIBMqzYh4TDWwAUin8oxXYGL4xZQz7Jnc7cmFg_cX0gnV32w/viewform?usp=sf_link'
         self.driver = self.create_webdriver()
         self.parser = self.create_parser()
-
-        # bs = BeautifulSoup(html, 'html.parser')
-        # attributes = {'data-test': 'property-card'}
-        # tags = bs.find_all(attrs=attributes)
-        # count = 0
-        # for tag in tags:
-        #     count +=1
-        # print(count)
+        self.house_listings = self.get_house_listings()
+        self.links = []
+        self.prices = []
+        self.addresses = []
 
     def create_parser(self) -> BeautifulSoup:
         """Return BeautifulSoup object from zillow_url."""
@@ -38,10 +41,12 @@ class ZillowHouseScraper:
             print(f'Unable to create parser from zillow_url.\n{e}')
 
     def _get_full_dynamic_html(self) -> str:
+        """Return full html source code using Selenium."""
         self.driver.get(zillow_url)
         self.driver.execute_script(
             'window.scrollTo(0, document.body.scrollHeight);'
         )
+        # allow dynamic elements to load after scrolling to bottom
         time.sleep(5)
         return self.driver.page_source
 
@@ -51,6 +56,14 @@ class ZillowHouseScraper:
         options = Options()
         options.add_experimental_option('detach', True)
         return webdriver.Edge(service=service, options=options)
+
+    def get_house_listings(self):
+        """
+        Parse for house listings in the form of article tags.
+        Return value is a list subclass 'bs4.element.ResultSet'.
+        """
+        attributes = {'data-test': 'property-card'}
+        return self.parser.find_all(attrs=attributes)
 
 
 if __name__ == '__main__':
