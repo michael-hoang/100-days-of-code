@@ -18,31 +18,35 @@ class ZillowHouseScraper:
 
     def __init__(self, webdriver_path: str, zillow_url: str):
         google_form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSdIBMqzYh4TDWwAUin8oxXYGL4xZQz7Jnc7cmFg_cX0gnV32w/viewform?usp=sf_link'
-        parser = self.create_parser()
-        driver = self.create_webdriver()
+        self.driver = self.create_webdriver()
+        self.parser = self.create_parser()
 
+        # bs = BeautifulSoup(html, 'html.parser')
         # attributes = {'data-test': 'property-card'}
-        # tags = self.parser.find_all(attrs=attributes)
+        # tags = bs.find_all(attrs=attributes)
         # count = 0
         # for tag in tags:
         #     count +=1
-        #     print(count)
+        # print(count)
 
     def create_parser(self) -> BeautifulSoup:
         """Return BeautifulSoup object from zillow_url."""
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36 Edg/114.0.1823.43'
-        }
-        response = requests.get(zillow_url, headers=headers)
-        if response.status_code == 200:
-            html = response.text
+        try:
+            html = self._get_full_dynamic_html()
             return BeautifulSoup(html, 'html.parser')
-        else:
-            print(
-                f'Unable to create parser from zillow_url.\nStatus code: {response.status_code}'
-            )
+        except Exception as e:
+            print(f'Unable to create parser from zillow_url.\n{e}')
+
+    def _get_full_dynamic_html(self) -> str:
+        self.driver.get(zillow_url)
+        self.driver.execute_script(
+            'window.scrollTo(0, document.body.scrollHeight);'
+        )
+        time.sleep(5)
+        return self.driver.page_source
 
     def create_webdriver(self) -> webdriver.Edge:
+        """Return Webdriver object from webdriver_path."""
         service = Service(webdriver_path)
         options = Options()
         options.add_experimental_option('detach', True)
