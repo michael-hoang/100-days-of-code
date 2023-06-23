@@ -46,6 +46,11 @@ class EdgeBrowserBot:
             return self.driver.page_source
 
 
+class ZillowParser:
+    def __init__(self):
+        self.parser = None
+
+
 class ZillowHouseScraper:
     """
     Scraper for Zillow house listings that exports data to Google sheet via Google form.
@@ -68,23 +73,6 @@ class ZillowHouseScraper:
         except Exception as e:
             print(f'Unable to create parser from zillow_url.\n{e}')
 
-    def _get_full_dynamic_html(self) -> str:
-        """Return full html source code using Selenium."""
-        self.driver.get(zillow_url)
-        self.driver.execute_script(
-            'window.scrollTo(0, document.body.scrollHeight);'
-        )
-        # allow dynamic elements to load after scrolling to bottom
-        time.sleep(5)
-        return self.driver.page_source
-
-    def create_webdriver(self) -> webdriver.Edge:
-        """Return Webdriver object from webdriver_path."""
-        service = Service(webdriver_path)
-        options = Options()
-        options.add_experimental_option('detach', True)
-        return webdriver.Edge(service=service, options=options)
-
     def get_house_listings(self):
         """
         Parse for house listings in the form of article tags.
@@ -96,7 +84,8 @@ class ZillowHouseScraper:
 
 if __name__ == '__main__':
     webdriver_path = r'C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe'
+    google_form_url = 'https://docs.google.com/forms/d/e/1FAIpQLSdIBMqzYh4TDWwAUin8oxXYGL4xZQz7Jnc7cmFg_cX0gnV32w/viewform?usp=sf_link'
     zillow_url = 'https://www.zillow.com/orange-county-ca/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22mapBounds%22%3A%7B%22north%22%3A34.1212772497386%2C%22east%22%3A-116.96606875585937%2C%22south%22%3A33.15862901775036%2C%22west%22%3A-118.57281924414062%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A1286%2C%22regionType%22%3A4%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22price%22%3A%7B%22max%22%3A850000%7D%2C%22beds%22%3A%7B%22min%22%3A1%7D%2C%22mp%22%3A%7B%22max%22%3A4273%7D%2C%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%7D'
     # zhs = ZillowHouseScraper(webdriver_path, zillow_url)
-    ebb = EdgeBrowserBot()
-    ebb.get_html(zillow_url)
+    bot = EdgeBrowserBot()
+    bot.get_html(zillow_url)
