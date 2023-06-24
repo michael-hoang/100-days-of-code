@@ -49,6 +49,22 @@ class EdgeBrowserBot:
             time.sleep(5)
             return self.driver.page_source
 
+    def fill_google_form(self, url: str, link: str, price: str, address: str):
+        """Fill and submit the Google form from the provided url."""
+        try:
+            self.driver.get(url)
+        except AttributeError:
+            print(
+                "ERROR get_html: Need to instantiate Webdriver object using the set_driver method."
+            )
+        else:
+            time.sleep(2)
+            inputs = self.driver.find_elements(By.XPATH, "//input[@type='text']")
+            inputs[0].send_keys(address)
+            inputs[1].send_keys(price)
+            inputs[2].send_keys(link)
+            self.driver.find_element(By.XPATH, "//div[@role='button']").click()
+
 
 class ZillowParser:
     """
@@ -108,3 +124,4 @@ if __name__ == "__main__":
     parser = ZillowParser()
     parser.set_parser(html)
     listings = parser.get_listings()
+    bot.fill_google_form(google_form_url, "link", "price", "address")
