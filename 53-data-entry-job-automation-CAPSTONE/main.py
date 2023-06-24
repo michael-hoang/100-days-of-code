@@ -4,7 +4,6 @@ import time
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
@@ -87,7 +86,7 @@ class ZillowParser:
                 "ERROR set_parser: Invalid HTML. Unable to instantiate the parser object."
             )
 
-    def get_listings(self) -> list[dict[dict]]:
+    def get_listings(self) -> list[dict]:
         """
         Return a list of houses in the form of a dictionary containing the links,
         prices, and addresses.
@@ -95,16 +94,12 @@ class ZillowParser:
         listings = []
         try:
             article_tags = self.parser.find_all(attrs={"data-test": "property-card"})
-            index = 1
             for tag in article_tags:
                 anchor_tag = tag.find("a")
                 link = anchor_tag.get("href")
                 price = str(tag.find(attrs={"data-test": "property-card-price"}).string)
                 address = str(anchor_tag.string)
-                house = {
-                    f"house{index}": {"link": link, "price": price, "address": address}
-                }
-                index += 1
+                house = {"link": link, "price": price, "address": address}
                 listings.append(house)
             return listings
         except AttributeError as e:
@@ -124,10 +119,13 @@ if __name__ == "__main__":
 
     bot = EdgeBrowserBot()
     bot.set_driver(driver_path)
-    # html = bot.get_html(zillow_url)
+    html = bot.get_html(zillow_url)
 
-    # parser = ZillowParser()
-    # parser.set_parser(html)
-    # listings = parser.get_listings()
+    parser = ZillowParser()
+    parser.set_parser(html)
+    listings = parser.get_listings()
 
-    bot.fill_google_form(google_form_url, "link", "price", "address")
+    for house in listings:
+        bot.fill_google_form(
+            google_form_url, house["link"], house["price"], house["address"]
+        )
