@@ -97,9 +97,14 @@ if __name__ == "__main__":
     driver_path = r"C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe"
     google_form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdIBMqzYh4TDWwAUin8oxXYGL4xZQz7Jnc7cmFg_cX0gnV32w/viewform?usp=sf_link"
     zillow_url = "https://www.zillow.com/orange-county-ca/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22mapBounds%22%3A%7B%22north%22%3A34.1212772497386%2C%22east%22%3A-116.96606875585937%2C%22south%22%3A33.15862901775036%2C%22west%22%3A-118.57281924414062%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A1286%2C%22regionType%22%3A4%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22price%22%3A%7B%22max%22%3A850000%7D%2C%22beds%22%3A%7B%22min%22%3A1%7D%2C%22mp%22%3A%7B%22max%22%3A4273%7D%2C%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%7D"
+
+    load_dotenv()
+    email = os.getenv("email")
+    password = os.getenv("password")
+
     bot = EdgeBrowserBot()
     bot.set_driver(driver_path)
     html = bot.get_html(zillow_url)
     parser = ZillowParser()
     parser.set_parser(html)
-    parser.get_listings()
+    listings = parser.get_listings()
