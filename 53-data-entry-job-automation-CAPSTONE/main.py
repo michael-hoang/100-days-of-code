@@ -63,7 +63,7 @@ class EdgeBrowserBot:
                 "ERROR get_html: Need to instantiate Webdriver object using the set_driver method."
             )
         else:
-            element = WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//input[@type='text']"))
             )
             inputs = self.driver.find_elements(By.XPATH, "//input[@type='text']")
@@ -196,8 +196,8 @@ class ZillowParser:
 
 if __name__ == "__main__":
     driver_path = r"C:\Users\Mike\OneDrive\Desktop\edgedriver_win64\msedgedriver.exe"
-    google_forms_url = "https://docs.google.com/forms/d/e/1FAIpQLSdIBMqzYh4TDWwAUin8oxXYGL4xZQz7Jnc7cmFg_cX0gnV32w/viewform?usp=sf_link"
-    zillow_url = "https://www.zillow.com/orange-county-ca/?searchQueryState=%7B%22pagination%22%3A%7B%7D%2C%22mapBounds%22%3A%7B%22north%22%3A34.1212772497386%2C%22east%22%3A-116.96606875585937%2C%22south%22%3A33.15862901775036%2C%22west%22%3A-118.57281924414062%7D%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A1286%2C%22regionType%22%3A4%7D%5D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22price%22%3A%7B%22max%22%3A850000%7D%2C%22beds%22%3A%7B%22min%22%3A1%7D%2C%22mp%22%3A%7B%22max%22%3A4273%7D%2C%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%7D"
+    google_forms_url = "https://docs.google.com/forms/d/e/1FAIpQLSf8_2FsnYdanFUJWL00YY3YLhA1GGcTnU7k5k02d-UE5X2jvw/viewform?usp=sf_link"
+    zillow_url = "https://www.zillow.com/las-vegas-nv/?searchQueryState=%7B%22mapBounds%22%3A%7B%22north%22%3A36.536232%2C%22east%22%3A-114.972982%2C%22south%22%3A35.896203%2C%22west%22%3A-115.648624%7D%2C%22isMapVisible%22%3Afalse%2C%22filterState%22%3A%7B%22price%22%3A%7B%22max%22%3A600000%7D%2C%22beds%22%3A%7B%22min%22%3A1%7D%2C%22mp%22%3A%7B%22max%22%3A3019%7D%2C%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22land%22%3A%7B%22value%22%3Afalse%7D%2C%22manu%22%3A%7B%22value%22%3Afalse%7D%7D%2C%22isListVisible%22%3Atrue%2C%22regionSelection%22%3A%5B%7B%22regionId%22%3A18959%2C%22regionType%22%3A6%7D%5D%2C%22pagination%22%3A%7B%7D%7D"
 
     load_dotenv()
     email = os.getenv("email")
@@ -205,16 +205,16 @@ if __name__ == "__main__":
 
     bot = EdgeBrowserBot()
     bot.set_driver(driver_path)
-    # html = bot.get_html(zillow_url)
+    html = bot.get_html(zillow_url)
 
-    # parser = ZillowParser()
-    # parser.set_parser(html)
-    # listings = parser.get_listings()
+    parser = ZillowParser()
+    parser.set_parser(html)
+    listings = parser.get_listings()
 
-    # for house in listings:
-    #     bot.fill_google_form(
-    #         google_forms_url, house["link"], house["price"], house["address"]
-    #     )
+    for house in listings:
+        bot.fill_google_form(
+            google_forms_url, house["link"], house["price"], house["address"]
+        )
 
     bot.create_google_sheet(
         google_forms_url, email, password, two_step_verification=True
