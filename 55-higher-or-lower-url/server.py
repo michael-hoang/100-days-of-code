@@ -23,14 +23,17 @@ def get_number(number):
     if number < secret_number:
         message = "Too low, try again!"
         image = "./static/low.gif"
+        color = "red"
     elif number > secret_number:
         message = "Too high, try again!"
         image = "./static/high.gif"
+        color = "purple"
     elif number == secret_number:
         message = "You found me!"
         image = "./static/correct.gif"
+        color = "green"
 
-    return f"<h1>{message}</h1><img src='{image}' alt='puppy-img'>"
+    return f"<h1 style='color:{color};'>{message}</h1><img src='{image}' alt='puppy-img'>"
 
 
 if __name__ == "__main__":
