@@ -16,12 +16,11 @@
 			</div>
 		</div>
 		{% for blog_post in posts: %}
-		{% set title, subtitle, id = blog_post["title"], blog_post["subtitle"],blog_post["id"] %}
 		<div class="content">
 			<div class="card">
-				<h2>{{ title }}</h2>
-				<p class="text">{{ subtitle }}</p>
-				<a href="{{ url_for('read_post', title=title, subtitle=subtitle, id=id) }}">Read</a>
+				<h2>{{ blog_post["title"] }}</h2>
+				<p class="text">{{ blog_post["subtitle"] }}</p>
+				<a href="{{ url_for('read_post', id=blog_post['id']) }}">Read</a>
 			</div>
 		</div>
 		{% endfor %}

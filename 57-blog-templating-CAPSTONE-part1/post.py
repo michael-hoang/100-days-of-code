@@ -1,2 +1,2 @@
 class Post:
-    pass
+    all_posts = None
