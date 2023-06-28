@@ -2,31 +2,31 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<link href="https://fonts.googleapis.com/css2?family=Raleway" rel="stylesheet">
-	<link rel="stylesheet" href="../static/css/styles.css">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body>
-	<div class="wrapper">
-		<div class="top">
-			<div class="title">
-				<h1><a href="{{ url_for('home') }}" style="color: #fff; text-decoration: none;">My Blog</a></h1>
-			</div>
-		</div>
-		<div class="content">
-			<div class="card">
-				<h1>{{ title }}</h2>
-					<h2>{{ subtitle }}</h3>
-						<p>{{ body }}</p>
-			</div>
+  <div class="wrapper">
+    <div class="top">
+      <div class="title">
+        <h1><a href="{{ url_for('home') }}" style="color: #fff; text-decoration: none;">My Blog</a></h1>
+      </div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <h1>{{ title }}</h2>
+          <h2>{{ subtitle }}</h3>
+            <p>{{ body }}</p>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </body>
 <footer>
-	<p>Made with ♥️ in London.</p>
+  <p>Made with ♥️ in London.</p>
 </footer>
 
 </html>
