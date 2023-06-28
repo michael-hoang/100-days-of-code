@@ -5,26 +5,23 @@ from post import Post
 
 
 app = Flask(__name__)
-data = Post()
+
+response = requests.get("https://api.npoint.io/c790b4d5cab58020d391")
+if response.status_code == 200:
+    post_obj = Post(response.json())
 
 
 @app.route("/")
 def home():
-    response = requests.get("https://api.npoint.io/c790b4d5cab58020d391")
-    if response.status_code == 200:
-        all_posts = response.json()
-        data.all_posts = all_posts
-    return render_template("index.html", posts=all_posts)
+    return render_template("index.html", posts=post_obj.all_posts)
 
 
 @app.route("/post/<int:id>")
 def read_post(id):
-    for post in data.all_posts:
-        if post["id"] == id:
-            title = post["title"]
-            subtitle = post["subtitle"]
-            body = post["body"]
-    return render_template("post.html", title=title, subtitle=subtitle, body=body)
+    post = post_obj.all_posts[id]
+    return render_template(
+        "post.html", title=post["title"], subtitle=post["subtitle"], body=post["body"]
+    )
 
 
 if __name__ == "__main__":
