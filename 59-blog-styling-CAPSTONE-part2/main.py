@@ -15,11 +15,7 @@ def home():
         blogs = response.json()
     curr_date = dt.datetime.now().strftime("%B %d, %Y")
 
-    return render_template(
-        "index.html",
-        blogs=blogs,
-        date=curr_date
-    )
+    return render_template("index.html", blogs=blogs, date=curr_date)
 
 
 @app.route("/about")
@@ -30,6 +26,11 @@ def about():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+
+@app.route("/post")
+def post():
+    return render_template("post.html")
 
 
 if __name__ == "__main__":

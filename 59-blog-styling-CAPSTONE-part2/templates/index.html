@@ -20,7 +20,7 @@
             {% for blog in blogs %}
             <!-- Post preview-->
             <div class="post-preview">
-                <a href="post.html">
+                <a href="{{ url_for('post') }}">
                     <h2 class="post-title">{{ blog.title }}</h2>
                     <h3 class="post-subtitle">{{ blog.subtitle }}</h3>
                 </a>
