@@ -1,3 +1,4 @@
+import datetime as dt
 import requests
 
 from flask import Flask, render_template
@@ -12,8 +13,13 @@ def home():
     response = requests.get(SAMPLE_BLOG_API)
     if response.status_code == 200:
         blogs = response.json()
+    curr_date = dt.datetime.now().strftime("%B %d, %Y")
 
-    return render_template("index.html", blogs=blogs)
+    return render_template(
+        "index.html",
+        blogs=blogs,
+        date=curr_date
+    )
 
 
 @app.route("/about")
