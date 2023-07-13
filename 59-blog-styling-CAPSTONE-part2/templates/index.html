@@ -20,14 +20,14 @@
             {% for blog in blogs %}
             <!-- Post preview-->
             <div class="post-preview">
-                <a href="{{ url_for('post') }}">
+                <a href="{{ url_for('post', title=blog.title) }}">
                     <h2 class="post-title">{{ blog.title }}</h2>
                     <h3 class="post-subtitle">{{ blog.subtitle }}</h3>
                 </a>
                 <p class="post-meta">
                     Posted by
                     <a href="#!">Mike H.</a>
-                    on {{ date }}
+                    on {{ blog.date }}
                 </p>
             </div>
             <!-- Divider-->

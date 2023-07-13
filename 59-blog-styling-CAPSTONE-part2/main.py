@@ -1,20 +1,17 @@
-import datetime as dt
 import requests
 
 from flask import Flask, render_template
 
 SAMPLE_BLOG_API = "https://api.npoint.io/8f8112d0970cce098676"
+response = requests.get(SAMPLE_BLOG_API)
+blogs = response.json()
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def home():
-    response = requests.get(SAMPLE_BLOG_API)
-    blogs = response.json()
-    curr_date = dt.datetime.now().strftime("%B %d, %Y")
-
-    return render_template("index.html", blogs=blogs, date=curr_date)
+    return render_template("index.html", blogs=blogs)
 
 
 @app.route("/about")
@@ -27,9 +24,11 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/post")
-def post():
-    return render_template("post.html")
+@app.route("/post/<title>")
+def post(title):
+    for blog in blogs:
+        if blog["title"] == title:
+            return render_template("post.html", blog=blog)
 
 
 if __name__ == "__main__":
