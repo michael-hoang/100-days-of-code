@@ -24,10 +24,10 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/post/<title>")
-def post(title):
+@app.route("/post/<int:id>")
+def post(id):
     for blog in blogs:
-        if blog["title"] == title:
+        if blog["id"] == id:
             return render_template("post.html", blog=blog)
 
 
