@@ -19,8 +19,10 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+    data = request.form
+
     return render_template("contact.html")
 
 
@@ -29,16 +31,6 @@ def post(id):
     for blog in blogs:
         if blog["id"] == id:
             return render_template("post.html", blog=blog)
-
-
-@app.route("/form-entry", methods=["POST"])
-def receive_data():
-    data = request.form
-    print(data["name"])
-    print(data["email"])
-    print(data["phone"])
-    print(data["message"])
-    return "<h1>Successfully sent your message.</h1>"
 
 
 if __name__ == "__main__":
