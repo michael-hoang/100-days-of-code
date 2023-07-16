@@ -1,4 +1,12 @@
 from flask import Flask, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField
+
+
+class LoginForm(FlaskForm):
+    email = StringField("email")
+    pw = StringField("password")
+
 
 app = Flask(__name__)
 
