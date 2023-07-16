@@ -1,3 +1,5 @@
+import email.message
+import os
 import requests
 
 from dotenv import load_dotenv
@@ -25,6 +27,22 @@ def about():
 def contact():
     if request.method == "POST":
         data = request.form
+        # Format message using email.message
+        message = email.message.Message()
+        message["Subject"] = f"Mike's Blog - Message from {data['name']}"
+        msg_body = (
+            data["message"]
+            + f"\n\nEmail: {data['email']}\nPhone number: {data['phone']}"
+        )
+        message.set_payload(msg_body)
+        # Load environment variables and send email
+        load_dotenv()
+        my_email = os.getenv("email")
+        send_gmail(
+            user_email=my_email,
+            user_pw=os.getenv("password"),
+            message=message.as_string(),
+        )
 
         return render_template(
             "contact.html", message="You've successfully sent your message."
