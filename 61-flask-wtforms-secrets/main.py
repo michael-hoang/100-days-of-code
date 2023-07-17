@@ -3,12 +3,13 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SubmitField
 
 
 class LoginForm(FlaskForm):
     email = StringField("Email")
     pw = PasswordField("Password")
+    submit = SubmitField("Log In")
 
 
 app = Flask(__name__)
