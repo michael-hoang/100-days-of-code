@@ -1,5 +1,6 @@
 import os
 
+from flask_bootstrap import Bootstrap5
 from dotenv import load_dotenv
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
@@ -14,6 +15,9 @@ class LoginForm(FlaskForm):
 
 
 app = Flask(__name__)
+
+bootstrap = Bootstrap5(app)
+
 load_dotenv()
 app.secret_key = os.getenv("SECRET_KEY")
 EMAIL = "admin@email.com"
