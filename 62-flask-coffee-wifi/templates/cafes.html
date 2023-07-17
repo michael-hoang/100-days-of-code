@@ -24,13 +24,15 @@
         <tbody>
           {% for cafe in cafes[1:] %}
           <tr>
-            <td>{{ cafe[0] }}</td>
-            <td><a href="{{ cafe[1] }}">Maps Link</a></td>
-            <td>{{ cafe[2] }}</td>
-            <td>{{ cafe[3] }}</td>
-            <td>{{ cafe[4] }}</td>
-            <td>{{ cafe[5] }}</td>
-            <td>{{ cafe[6] }}</td>
+            {% for col in cafe %}
+            {% if col[:4] == "http" %}
+            <td>
+              <a href="{{ col }}">Maps Link</a>
+            </td>
+            {% else %}
+            <td>{{ col }}</td>
+            {% endif %}
+            {% endfor %}
           </tr>
           {% endfor %}
         </tbody>
