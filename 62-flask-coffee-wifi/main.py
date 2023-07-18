@@ -40,6 +40,11 @@ class CafeForm(FlaskForm):
         choices=["✘"] + get_emoji_ratings("💪"),
         validators=[DataRequired()],
     )
+    power_socket_rating = SelectField(
+        "Power Socket Availability",
+        choices=["✘"] + get_emoji_ratings("🔌"),
+        validate_choice=[DataRequired],
+    )
     # ---------------------------------------------------------------------------
     submit = SubmitField("Submit")
 
