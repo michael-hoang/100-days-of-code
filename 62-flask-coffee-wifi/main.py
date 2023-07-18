@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, URLField
+from wtforms import TimeField, StringField, SubmitField, URLField
 from wtforms.validators import DataRequired, URL
 import csv
 
@@ -12,7 +12,7 @@ Bootstrap5(app)
 
 class CafeForm(FlaskForm):
     cafe = StringField("Cafe name", validators=[DataRequired()])
-    
+
     # Exercise:
     # add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
     # make coffee/wifi/power a select element with choice of 0 to 5.
@@ -20,8 +20,10 @@ class CafeForm(FlaskForm):
     # make all fields required except submit
     # use a validator to check that the URL field has a URL entered.
     # ---------------------------------------------------------------------------
-    location_url = URLField("Location URL", validators=[URL()])
-
+    location_url = URLField(
+        "Cafe Location on Google Maps (URL)", validators=[DataRequired(), URL()]
+    )
+    open_time = TimeField("Open Time e.g. 8AM", validators=[DataRequired()])
     # ---------------------------------------------------------------------------
     submit = SubmitField("Submit")
 
