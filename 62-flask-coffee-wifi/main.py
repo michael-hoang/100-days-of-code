@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
-from wtforms import TimeField, StringField, SubmitField, URLField
+from wtforms import SelectField, StringField, SubmitField, TimeField, URLField
 from wtforms.validators import DataRequired, URL
 import csv
 
@@ -25,6 +25,11 @@ class CafeForm(FlaskForm):
     )
     open_time = TimeField("Open Time e.g. 8AM", validators=[DataRequired()])
     close_time = TimeField("Close Time e.g. 5:30PM", validators=[DataRequired()])
+    coffee_rating = SelectField(
+        "Coffee Rating",
+        choices=["☕️", "☕️☕️", "☕️☕️☕️", "☕️☕️☕️☕️", "☕️☕️☕️☕️☕️"],
+        validators=[DataRequired()],
+    )
     # ---------------------------------------------------------------------------
     submit = SubmitField("Submit")
 
