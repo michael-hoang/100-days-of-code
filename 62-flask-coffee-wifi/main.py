@@ -24,6 +24,7 @@ class CafeForm(FlaskForm):
         "Cafe Location on Google Maps (URL)", validators=[DataRequired(), URL()]
     )
     open_time = TimeField("Open Time e.g. 8AM", validators=[DataRequired()])
+    close_time = TimeField("Close Time e.g. 5:30PM", validators=[DataRequired()])
     # ---------------------------------------------------------------------------
     submit = SubmitField("Submit")
 
