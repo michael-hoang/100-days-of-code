@@ -10,6 +10,11 @@ app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
 Bootstrap5(app)
 
 
+def get_emoji_ratings(emoji: str) -> list:
+    """Return a list of the provided emoji as ratings on a scale from 1-5."""
+    return [emoji * i for i in range(1, 6)]
+
+
 class CafeForm(FlaskForm):
     cafe = StringField("Cafe name", validators=[DataRequired()])
 
@@ -27,7 +32,12 @@ class CafeForm(FlaskForm):
     close_time = TimeField("Close Time e.g. 5:30PM", validators=[DataRequired()])
     coffee_rating = SelectField(
         "Coffee Rating",
-        choices=["☕️", "☕️☕️", "☕️☕️☕️", "☕️☕️☕️☕️", "☕️☕️☕️☕️☕️"],
+        choices=get_emoji_ratings("☕️"),
+        validators=[DataRequired()],
+    )
+    wifi_str_rating = SelectField(
+        "Wifi Strength Rating",
+        choices=["✘"] + get_emoji_ratings("💪"),
         validators=[DataRequired()],
     )
     # ---------------------------------------------------------------------------
