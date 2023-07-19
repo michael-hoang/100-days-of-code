@@ -19,6 +19,7 @@ def add():
             "rating": request.form.get("rating"),
         }
         all_books.append(book)
+        return redirect(url_for("home"))
 
     return render_template("add.html")
 
