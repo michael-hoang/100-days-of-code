@@ -18,8 +18,8 @@ def add():
             "author": request.form.get("author"),
             "rating": request.form.get("rating"),
         }
-        print("book submitted")
-        
+        all_books.append(book)
+
     return render_template("add.html")
 
 
