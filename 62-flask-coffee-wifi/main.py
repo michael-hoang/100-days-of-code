@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, SubmitField, TimeField, URLField
@@ -75,7 +75,7 @@ def add_cafe():
                 form.power_socket_rating.data,
             ]
             cafe_writer.writerow(fields)
-            return redirect("/cafes")
+            return redirect(url_for("cafes"))
 
     return render_template("add.html", form=form)
 
