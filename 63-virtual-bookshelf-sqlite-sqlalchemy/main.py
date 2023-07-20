@@ -7,6 +7,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///all-books.db"
 db.init_app(app)
 
 
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.VARCHAR(length=250), nullable=False, unique=True)
+    author = db.Column(db.VARCHAR(length=250), nullable=False)
+    rating = db.Column(db.Float, nullable=False)
+
+
 @app.route("/")
 def home():
     return render_template("index.html", all_books=None)
