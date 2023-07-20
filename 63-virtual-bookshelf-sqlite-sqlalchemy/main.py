@@ -45,12 +45,14 @@ def add():
     return render_template("add.html")
 
 
-@app.route("/edit", methods=["GET", "POST"])
-def edit():
+@app.route("/edit/<int:book_id>", methods=["GET", "POST"])
+def edit(book_id):
+    row = db.session.execute(db.select(Book).where(Book.id == book_id))
+    book = row.scalar()
     if request.method == "POST":
         pass
 
-    return render_template("edit.html")
+    return render_template("edit.html", book=book)
 
 
 if __name__ == "__main__":
