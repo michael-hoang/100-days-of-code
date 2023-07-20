@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-
-all_books = []
+db = SQLAlchemy()
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///all-books.db"
+db.init_app(app)
 
 
 @app.route("/")
 def home():
-    return render_template("index.html", all_books=all_books)
+    return render_template("index.html", all_books=None)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -18,7 +20,6 @@ def add():
             "author": request.form.get("author"),
             "rating": request.form.get("rating"),
         }
-        all_books.append(book)
         return redirect(url_for("home"))
 
     return render_template("add.html")
