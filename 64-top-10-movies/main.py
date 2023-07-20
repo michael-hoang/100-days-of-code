@@ -7,8 +7,12 @@ from wtforms.validators import DataRequired
 import requests
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
+app.config["SQLACHEMY_DATABASE_URI"] = "sqlite:///movies-ratings.db"
 Bootstrap5(app)
+
+db = SQLAlchemy()
+db.init_app(app)
 
 
 @app.route("/")
@@ -16,5 +20,5 @@ def home():
     return render_template("index.html")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
