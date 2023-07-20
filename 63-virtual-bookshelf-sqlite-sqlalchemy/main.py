@@ -14,6 +14,10 @@ class Book(db.Model):
     rating = db.Column(db.Float, nullable=False)
 
 
+with app.app_context():
+    db.create_all()
+
+
 @app.route("/")
 def home():
     return render_template("index.html", all_books=None)
