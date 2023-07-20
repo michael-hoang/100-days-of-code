@@ -9,7 +9,7 @@
 
   {% for movie in movies %}
   <div class="card">
-    <div class="front" style="background-image: url('{{ movie.img_url }}');">
+    <div class="front" style="background-image: url('{{ movie.img_url }}'); background-size: 100% 100%;">
       <p class="large">{{ movie.ranking }}</p>
     </div>
     <div class="back">
