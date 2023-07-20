@@ -8,10 +8,10 @@
 </head>
 
 <body>
-  <p>Book Name:</p>
-  <p>Current Rating:</p>
+  <p>Book Name: {{ book.title }} - {{ book.author }}</p>
+  <p>Current Rating: {{ book.rating }}</p>
   <form action="{{ url_for('edit', book_id=book.id)}}" method="post">
-    <span>New Rating:</span>
+    <label>New Rating:</label>
     <input type="number" max="10" min="0" name="rating" placeholder="max 10.0" step="0.1">
     <button type="submit">Submit</button>
   </form>
