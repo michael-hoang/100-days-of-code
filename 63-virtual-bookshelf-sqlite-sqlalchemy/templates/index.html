@@ -15,7 +15,8 @@
     {% for book in all_books %}
     <li>
       {{ book.title }} - {{ book.author }} - {{ book.rating }}/10
-      <a href="{{ url_for('edit', book_id=book.id) }}">Edit Rating</a>
+      <a href="{{ url_for('edit', book_id=book.id) }}">Edit Rating</a> |
+      <a href="{{ url_for('delete', book_id=book.id) }}" onclick="return confirm('Are you sure you want to delete {{ book.title }}?')">Delete</a>
     </li>
     {% endfor %}
   </ul>
