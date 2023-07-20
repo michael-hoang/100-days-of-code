@@ -50,7 +50,10 @@ def edit(book_id):
     row = db.session.execute(db.select(Book).where(Book.id == book_id))
     book = row.scalar()
     if request.method == "POST":
-        pass
+        new_rating = request.form["rating"]
+        book.rating = new_rating
+        db.session.commit()
+        return redirect(url_for("home"))
 
     return render_template("edit.html", book=book)
 
