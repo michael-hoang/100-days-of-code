@@ -20,7 +20,14 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    return render_template("index.html", all_books=None)
+    all_rows = db.session.execute(db.select(Book).order_by(Book.title))
+    all_books = all_rows.scalars()
+    return render_template(
+        "index.html",
+        all_books=all_books,
+        # .scalar() returns None if no results come back from .select query
+        contain_books=db.session.execute(db.select(Book)).scalar(),
+    )
 
 
 @app.route("/add", methods=["GET", "POST"])
