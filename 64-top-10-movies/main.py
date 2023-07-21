@@ -102,8 +102,10 @@ def edit(movie_id):
     if rating_form.validate_on_submit():
         if is_filled(rating_form.rating):
             movie.rating = rating_form.rating.data
-            db.session.commit()
+        if is_filled(rating_form.review):
+            movie.review = rating_form.review.data
 
+        db.session.commit()
         return redirect(url_for("home"))
 
     return render_template("edit.html", form=rating_form, movie=movie)
