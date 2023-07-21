@@ -56,6 +56,14 @@ class Movie(db.Model):
 #     db.session.commit()
 
 
+class RateMovieForm(FlaskForm):
+    """Models a movie rating form using FlaskForm."""
+
+    rating = StringField("Your Rating Out of 10 e.g. 7.5", validators=[DataRequired()])
+    review = StringField("Your Review")
+    submit = SubmitField("Done")
+
+
 @app.route("/")
 def home():
     movies = db.session.execute(
@@ -65,9 +73,11 @@ def home():
     return render_template("index.html", movies=movies)
 
 
-@app.route("/edit", methods=["GET", "POST"])
-def edit():
-    return render_template("edit.html")
+@app.route("/edit/<int:movie_id>", methods=["GET", "POST"])
+def edit(movie_id):
+    movie = db.get_or_404(Movie, movie_id)
+    rating_form = RateMovieForm()
+    return render_template("edit.html", form=rating_form, movie=movie)
 
 
 if __name__ == "__main__":
