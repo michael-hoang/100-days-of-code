@@ -69,12 +69,20 @@ class RateMovieForm(FlaskForm):
 
 
 def is_filled(field: fields) -> bool:
-    """Return True if field is not empty."""
-    value = field.raw_data[0]
-    if value == "":
-        print("false")
+    """
+    Return True if field is not empty.
+
+    raw_data:
+    If form data is processed, is the valuelist given from the formdata wrapper.
+    Otherwise, raw_data will be None.
+    """
+    try:
+        value = field.raw_data[0]
+    except TypeError:
         return False
-    print("true")
+    else:
+        if value == "":
+            return False
     return True
 
 
@@ -93,7 +101,8 @@ def edit(movie_id):
     rating_form = RateMovieForm()
     if rating_form.validate_on_submit():
         if is_filled(rating_form.rating):
-            pass
+            movie.rating = rating_form.rating.data
+            db.session.commit()
 
         return redirect(url_for("home"))
 
