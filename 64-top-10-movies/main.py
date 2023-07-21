@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import DecimalField, StringField, SubmitField
+from wtforms import DecimalField, StringField, SubmitField, fields
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
 import requests
 
@@ -68,6 +68,16 @@ class RateMovieForm(FlaskForm):
     submit = SubmitField("Done")
 
 
+def is_filled(field: fields) -> bool:
+    """Return True if field is not empty."""
+    value = field.raw_data[0]
+    if value == "":
+        print("false")
+        return False
+    print("true")
+    return True
+
+
 @app.route("/")
 def home():
     movies = db.session.execute(
@@ -82,9 +92,9 @@ def edit(movie_id):
     movie = db.get_or_404(Movie, movie_id)
     rating_form = RateMovieForm()
     if rating_form.validate_on_submit():
-        if rating_form.rating.raw_data:
-            print(rating_form.rating.raw_data)
-            print("nope")
+        if is_filled(rating_form.rating):
+            pass
+
         return redirect(url_for("home"))
 
     return render_template("edit.html", form=rating_form, movie=movie)
