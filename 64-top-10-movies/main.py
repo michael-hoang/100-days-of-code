@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import DecimalField, StringField, SubmitField
-from wtforms.validators import DataRequired, InputRequired, NumberRange
+from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
 import requests
 
 app = Flask(__name__)
@@ -62,7 +62,7 @@ class RateMovieForm(FlaskForm):
     rating = DecimalField(
         "Your Rating Out of 10 e.g. 7.5",
         render_kw={"step": "0.1"},
-        validators=[InputRequired(), NumberRange(min=0, max=10)],
+        validators=[NumberRange(min=0, max=10), Optional()],
     )
     review = StringField("Your Review")
     submit = SubmitField("Done")
@@ -82,7 +82,11 @@ def edit(movie_id):
     movie = db.get_or_404(Movie, movie_id)
     rating_form = RateMovieForm()
     if rating_form.validate_on_submit():
-        pass
+        if rating_form.rating.raw_data:
+            print(rating_form.rating.raw_data)
+            print("nope")
+        return redirect(url_for("home"))
+
     return render_template("edit.html", form=rating_form, movie=movie)
 
 
