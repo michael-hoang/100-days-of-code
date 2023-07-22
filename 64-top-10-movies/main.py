@@ -16,6 +16,12 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies-ratings.db"
 db = SQLAlchemy()
 db.init_app(app)
 
+load_dotenv()
+HEADERS = {
+    "accept": "application/json",
+    "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
+}
+
 
 class Movie(db.Model):
     """An ORM-based model of an SQL table called 'movies'."""
@@ -96,17 +102,19 @@ def is_filled(field: fields) -> bool:
     return True
 
 
-def search_movie(movie: str):
+def search_movie(movie: str) -> dict:
     """Request TMDB API (https://api.themoviedb.org/3/search/movie) for movie data."""
-    load_dotenv()
+
     url = f"https://api.themoviedb.org/3/search/movie?query={movie}"
-    headers = {
-        "accept": "application/json",
-        "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
-    }
-    response = requests.get(url, headers=headers)
-    data = response.text
-    print(data)    
+    response = requests.get(url, headers=HEADERS)
+    return response.json()
+
+
+def get_movie_poster(poster_path: str) -> str:
+    """Generate an image URL from poster_path"""
+    url = "https://api.themoviedb.org/3/configuration"
+    response = requests.get(url, headers=HEADERS)
+    print(response.json())
 
 
 @app.route("/")
