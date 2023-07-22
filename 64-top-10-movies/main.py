@@ -2,7 +2,12 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from helpers import get_movie_description, get_poster_base_url_and_sizes, is_filled, search_movie
+from helpers import (
+    get_movie_description,
+    get_poster_base_url_and_sizes,
+    is_filled,
+    search_movie,
+)
 from wtforms import DecimalField, StringField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
 
@@ -119,8 +124,8 @@ def delete():
 def add():
     add_form = AddMovieForm()
     if add_form.validate_on_submit():
-        title = add_form.title.data
-        movie_data = search_movie(movie=title)
+        search_title = add_form.title.data
+        movie_data = search_movie(movie=search_title)
         movie_results = movie_data["results"]
         num_results = movie_data["total_results"]
         total_pages = movie_data["total_pages"]
@@ -130,7 +135,7 @@ def add():
             num_results=num_results,
             poster_base_url=POSTER_BASE_URL,
             poster_size=POSTER_SIZE_SM,
-            title=title,
+            search_title=search_title,
             total_pages=total_pages,
         )
 
@@ -140,17 +145,25 @@ def add():
 @app.route("/select", methods=["GET", "POST"])
 def select():
     movie_id = request.args["id"]
-    movie_desc = get_movie_description(movie_id)
-    print(movie_desc)
-    
+    new_movie = Movie(
+        title=request.args["title"],
+        year=request.args["release_year"],
+        description=get_movie_description(movie_id),
+        rating=None,
+        ranking=None,
+        review=None,
+        img_url=POSTER_BASE_URL + POSTER_SIZE_LG + "/" + request.args["poster"],
+    )
+    db.session.add(new_movie)
+    db.session.commit()
     return redirect(url_for("home"))
 
 
 @app.route("/page")
 def page():
     page_requested = int(request.args["page"])
-    title = request.args["title"]
-    movie_data = search_movie(movie=title, page=page_requested)
+    search_title = request.args["search_title"]
+    movie_data = search_movie(movie=search_title, page=page_requested)
     movie_results = movie_data["results"]
     num_results = movie_data["total_results"]
     total_pages = movie_data["total_pages"]
@@ -160,7 +173,7 @@ def page():
         num_results=num_results,
         poster_base_url=POSTER_BASE_URL,
         poster_size=POSTER_SIZE_SM,
-        title=title,
+        search_title=search_title,
         total_pages=total_pages,
     )
 

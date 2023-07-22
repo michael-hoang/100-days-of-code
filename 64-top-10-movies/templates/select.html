@@ -6,10 +6,10 @@
 <div class="content">
   <h1 class="heading">Select Movie</h1>
   <a href="{{ url_for('add') }}">Return</a>
-  <p style="font-weight: bold; text-align:center; width: 100%">{{ num_results }} result(s) for "{{ title }}"</p>
+  <p style="font-weight: bold; text-align:center; width: 100%">{{ num_results }} result(s) for "{{ search_title }}"</p>
   {% for page in range(1, total_pages + 1) %}
   <p>
-    <a href="{{ url_for('page', page=page, title=title) }}" style="margin-right: 5px;">{{ page }}</a>
+    <a href="{{ url_for('page', page=page, search_title=search_title) }}" style="margin-right: 5px;">{{ page }}</a>
   </p>
   {% endfor %}
 </div>
@@ -18,7 +18,9 @@
   {% for movie in movie_results %}
   <img src="{{ poster_base_url }}{{ poster_size }}/{{ movie.poster_path }}" alt="{{ movie.title }}-movie-poster">
   <p style="margin-bottom: 25px">
-    <a href="{{ url_for('select', id=movie.id) }}">{{ movie.title }} ({{ movie.release_date.split("-")[0] }})</a>
+    <a href="{{ url_for('select', id=movie.id, poster=movie.poster_path, release_year=movie.release_date.split('-')[0], title=movie.title) }}">
+      {{ movie.title }} ({{ movie.release_date.split("-")[0] }})
+    </a>
   </p>
   {% endfor %}
 </div>
