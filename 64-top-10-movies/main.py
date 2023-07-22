@@ -130,6 +130,7 @@ def add():
             num_results=num_results,
             poster_base_url=POSTER_BASE_URL,
             poster_size=POSTER_SIZE_SM,
+            title=title,
             total_pages=total_pages,
         )
 
@@ -141,6 +142,25 @@ def select():
     movie_id = request.args["id"]
     print(movie_id)
     return redirect(url_for("home"))
+
+
+@app.route("/page")
+def page():
+    page_requested = int(request.args["page"])
+    title = request.args["title"]
+    movie_data = search_movie(movie=title, page=page_requested)
+    movie_results = movie_data["results"]
+    num_results = movie_data["total_results"]
+    total_pages = movie_data["total_pages"]
+    return render_template(
+        "select.html",
+        movie_results=movie_results,
+        num_results=num_results,
+        poster_base_url=POSTER_BASE_URL,
+        poster_size=POSTER_SIZE_SM,
+        title=title,
+        total_pages=total_pages,
+    )
 
 
 if __name__ == "__main__":
