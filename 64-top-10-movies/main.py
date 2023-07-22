@@ -1,9 +1,11 @@
+from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import DecimalField, StringField, SubmitField, fields
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
+import os
 import requests
 
 app = Flask(__name__)
@@ -130,6 +132,11 @@ def delete():
 @app.route("/add", methods=["GET", "POST"])
 def add():
     add_form = AddMovieForm()
+    if add_form.validate_on_submit():
+        title = add_form.title.data
+        load_dotenv()
+        tmdb_api_key = os.environ.get("TMDB_API_KEY")
+
     return render_template("add.html", form=add_form)
 
 
