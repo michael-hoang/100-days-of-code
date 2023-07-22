@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from helpers import get_poster_base_url_and_sizes, is_filled, search_movie
+from helpers import get_movie_description, get_poster_base_url_and_sizes, is_filled, search_movie
 from wtforms import DecimalField, StringField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
 
@@ -140,7 +140,9 @@ def add():
 @app.route("/select", methods=["GET", "POST"])
 def select():
     movie_id = request.args["id"]
-    print(movie_id)
+    movie_desc = get_movie_description(movie_id)
+    print(movie_desc)
+    
     return redirect(url_for("home"))
 
 

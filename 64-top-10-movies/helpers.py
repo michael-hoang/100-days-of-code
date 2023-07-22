@@ -11,6 +11,13 @@ HEADERS = {
 
 
 # My helper functions
+def get_movie_description(movie_id: int) -> str:
+    """Get the descrition of a movie."""
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    response = requests.get(url, headers=HEADERS)
+    return response.json()["overview"]
+
+
 def get_poster_base_url_and_sizes() -> tuple[str, list]:
     """Request base image URL and list of image poster sizes."""
     url = "https://api.themoviedb.org/3/configuration"
