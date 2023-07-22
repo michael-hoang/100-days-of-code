@@ -3,6 +3,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
+from helpers import get_poster_base_url_and_sizes, is_filled, search_movie
 from wtforms import DecimalField, StringField, SubmitField, fields
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
 import os
@@ -21,6 +22,8 @@ HEADERS = {
     "accept": "application/json",
     "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
 }
+POSTER_BASE_URL, POSTER_SIZES = get_poster_base_url_and_sizes(headers=HEADERS)
+print(f"Poster base URL: {POSTER_BASE_URL}\nList of poster sizes: {POSTER_SIZES}")
 
 
 class Movie(db.Model):
@@ -83,40 +86,6 @@ class AddMovieForm(FlaskForm):
     submit = SubmitField("Search Movie")
 
 
-# My helper functions
-def is_filled(field: fields) -> bool:
-    """
-    Return True if field is not empty.
-
-    raw_data:
-    If form data is processed, is the valuelist given from the formdata wrapper.
-    Otherwise, raw_data will be None.
-    """
-    try:
-        value = field.raw_data[0]
-    except TypeError:
-        return False
-    else:
-        if value == "":
-            return False
-    return True
-
-
-def search_movie(movie: str) -> dict:
-    """Request TMDB API (https://api.themoviedb.org/3/search/movie) for movie data."""
-
-    url = f"https://api.themoviedb.org/3/search/movie?query={movie}"
-    response = requests.get(url, headers=HEADERS)
-    return response.json()
-
-
-def get_movie_poster(poster_path: str) -> str:
-    """Generate an image URL from poster_path"""
-    url = "https://api.themoviedb.org/3/configuration"
-    response = requests.get(url, headers=HEADERS)
-    print(response.json())
-
-
 @app.route("/")
 def home():
     movies = db.session.execute(
@@ -156,7 +125,7 @@ def add():
     add_form = AddMovieForm()
     if add_form.validate_on_submit():
         title = add_form.title.data
-        movie_data = search_movie(title)
+        movie_data = search_movie(headers=HEADERS, movie=title)
         movie_results = movie_data["results"]
         num_results = movie_data["total_results"]
         total_pages = movie_data["total_pages"]
@@ -164,6 +133,7 @@ def add():
             "select.html",
             movie_results=movie_results,
             num_results=num_results,
+            poster_base_url=POSTER_BASE_URL,
             total_pages=total_pages,
         )
 
