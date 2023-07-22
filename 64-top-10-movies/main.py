@@ -1,13 +1,11 @@
-from dotenv import load_dotenv
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from helpers import get_poster_base_url_and_sizes, is_filled, search_movie
-from wtforms import DecimalField, StringField, SubmitField, fields
+from wtforms import DecimalField, StringField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, NumberRange, Optional
-import os
-import requests
+
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "8BYkEfBA6O6donzWlSihBXox7C0sKR6b"
@@ -17,12 +15,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies-ratings.db"
 db = SQLAlchemy()
 db.init_app(app)
 
-load_dotenv()
-HEADERS = {
-    "accept": "application/json",
-    "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
-}
-POSTER_BASE_URL, poster_sizes = get_poster_base_url_and_sizes(headers=HEADERS)
+POSTER_BASE_URL, poster_sizes = get_poster_base_url_and_sizes()
 # print(f"Poster base URL: {POSTER_BASE_URL}\nList of poster sizes: {poster_sizes}")
 POSTER_SIZE_SM = poster_sizes[1]  # w154
 POSTER_SIZE_LG = poster_sizes[4]  # w500
@@ -127,7 +120,7 @@ def add():
     add_form = AddMovieForm()
     if add_form.validate_on_submit():
         title = add_form.title.data
-        movie_data = search_movie(headers=HEADERS, movie=title)
+        movie_data = search_movie(movie=title)
         movie_results = movie_data["results"]
         num_results = movie_data["total_results"]
         total_pages = movie_data["total_pages"]
