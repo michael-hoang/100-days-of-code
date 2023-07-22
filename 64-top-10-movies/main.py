@@ -102,6 +102,15 @@ def edit(movie_id):
     if rating_form.validate_on_submit():
         if is_filled(rating_form.rating):
             movie.rating = rating_form.rating.data
+            # Update movie rankings in db
+            all_movies = db.session.execute(
+                db.select(Movie).order_by(Movie.rating.desc())
+            ).scalars()
+            ranking = 1
+            for each_movie in all_movies:
+                each_movie.ranking = ranking
+                ranking += 1
+
         if is_filled(rating_form.review):
             movie.review = rating_form.review.data
 
