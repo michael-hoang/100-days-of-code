@@ -159,8 +159,12 @@ def add():
         movie_data = search_movie(title)
         movie_results = movie_data["results"]
         num_results = movie_data["total_results"]
+        total_pages = movie_data["total_pages"]
         return render_template(
-            "select.html", movie_results=movie_results, num_results=num_results
+            "select.html",
+            movie_results=movie_results,
+            num_results=num_results,
+            total_pages=total_pages,
         )
 
     return render_template("add.html", form=add_form)

@@ -6,7 +6,13 @@
 <div class="content">
   <h1 class="heading">Select Movie</h1>
   <p style="font-weight: bold; text-align:center; width: 100%">{{ num_results }} result(s)</p>
+  {% for page in range(1, total_pages + 1) %}
+  <p>
+    <a href="#" style="margin-right: 5px;">{{ page }}</a>
+  </p>
+  {% endfor %}
 </div>
+
 <div style="text-align: center;">
   {% for movie in movie_results %}
   <p>
