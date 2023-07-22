@@ -15,7 +15,7 @@
 
 <div style="text-align: center;">
   {% for movie in movie_results %}
-  <img src="https://image.tmdb.org/t/p/w154/{{ movie.poster_path }}" alt="{{ movie.title }}-movie-poster">
+  <img src="{{ poster_base_url }}{{ poster_size }}/{{ movie.poster_path }}" alt="{{ movie.title }}-movie-poster">
   <p style="margin-bottom: 25px">
     <a href="{{ url_for('select', id=movie.id) }}">{{ movie.title }} - {{ movie.release_date }}</a>
   </p>

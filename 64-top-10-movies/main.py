@@ -22,8 +22,10 @@ HEADERS = {
     "accept": "application/json",
     "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
 }
-POSTER_BASE_URL, POSTER_SIZES = get_poster_base_url_and_sizes(headers=HEADERS)
-print(f"Poster base URL: {POSTER_BASE_URL}\nList of poster sizes: {POSTER_SIZES}")
+POSTER_BASE_URL, poster_sizes = get_poster_base_url_and_sizes(headers=HEADERS)
+# print(f"Poster base URL: {POSTER_BASE_URL}\nList of poster sizes: {poster_sizes}")
+POSTER_SIZE_SM = poster_sizes[1]  # w154
+POSTER_SIZE_LG = poster_sizes[4]  # w500
 
 
 class Movie(db.Model):
@@ -134,6 +136,7 @@ def add():
             movie_results=movie_results,
             num_results=num_results,
             poster_base_url=POSTER_BASE_URL,
+            poster_size=POSTER_SIZE_SM,
             total_pages=total_pages,
         )
 
