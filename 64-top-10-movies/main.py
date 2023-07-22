@@ -111,5 +111,14 @@ def edit(movie_id):
     return render_template("edit.html", form=rating_form, movie=movie)
 
 
+@app.route("/delete")
+def delete():
+    movie_id = request.args["movie_id"]
+    movie = db.session.execute(db.select(Movie).where(Movie.id == movie_id)).scalar()
+    db.session.delete(movie)
+    db.session.commit()
+    return redirect(url_for("home"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
