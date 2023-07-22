@@ -80,7 +80,7 @@ class AddMovieForm(FlaskForm):
     """Models a form to add new movies to favorites."""
 
     title = StringField("Movie Title", validators=[DataRequired()])
-    submit = SubmitField("Add Movie")
+    submit = SubmitField("Search Movie")
 
 
 # My helper functions
@@ -156,7 +156,8 @@ def add():
     add_form = AddMovieForm()
     if add_form.validate_on_submit():
         title = add_form.title.data
-        search_movie(title)
+        movie_data = search_movie(title)
+
 
     return render_template("add.html", form=add_form)
 
