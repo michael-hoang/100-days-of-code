@@ -68,6 +68,13 @@ class RateMovieForm(FlaskForm):
     submit = SubmitField("Done")
 
 
+class AddMovieForm(FlaskForm):
+    """Models a form to add new movies to favorites."""
+
+    title = StringField("Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
+
+
 def is_filled(field: fields) -> bool:
     """
     Return True if field is not empty.
