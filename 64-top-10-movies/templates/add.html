@@ -8,4 +8,6 @@
   <h1 class="heading">Add a Movie</h1>
   {{ render_form(form, novalidate=True) }}
 </div>
+<br>
+<a class="content" href="{{ url_for('home') }}">Return</a>
 {% endblock %}
