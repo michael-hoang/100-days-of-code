@@ -6,9 +6,14 @@
 <div class="content">
   <h1 class="heading">Select Movie</h1>
   <p style="font-weight: bold; text-align:center; width: 100%">{{ num_results }} result(s)</p>
-  <p>
-    <a href="#"> MOVIE TITLE - MOVIE RELEASE DATE</a>
-  </p>
-
 </div>
+<div style="text-align: center;">
+  {% for movie in movie_results %}
+  <p>
+    <a href="#">{{ movie.title }} - {{ movie.release_date }}</a>
+  </p>
+  {% endfor %}
+</div>
+
+
 {% endblock %}

@@ -157,8 +157,11 @@ def add():
     if add_form.validate_on_submit():
         title = add_form.title.data
         movie_data = search_movie(title)
+        movie_results = movie_data["results"]
         num_results = movie_data["total_results"]
-        return render_template("select.html", num_results=num_results)
+        return render_template(
+            "select.html", movie_results=movie_results, num_results=num_results
+        )
 
     return render_template("add.html", form=add_form)
 
