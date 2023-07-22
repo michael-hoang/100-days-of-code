@@ -166,5 +166,12 @@ def add():
     return render_template("add.html", form=add_form)
 
 
+@app.route("/select", methods=["GET", "POST"])
+def select():
+    movie_id = request.args["id"]
+    print(movie_id)
+    return redirect(url_for("home"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)

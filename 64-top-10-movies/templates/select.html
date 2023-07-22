@@ -10,7 +10,7 @@
 <div style="text-align: center;">
   {% for movie in movie_results %}
   <p>
-    <a href="#">{{ movie.title }} - {{ movie.release_date }}</a>
+    <a href="{{ url_for('select', id=movie.id) }}">{{ movie.title }} - {{ movie.release_date }}</a>
   </p>
   {% endfor %}
 </div>
