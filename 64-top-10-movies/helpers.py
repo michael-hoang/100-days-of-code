@@ -37,9 +37,9 @@ def is_filled(field: fields) -> bool:
     return True
 
 
-def search_movie(movie: str) -> dict:
+def search_movie(movie: str, page=1) -> dict:
     """Request TMDB API (https://api.themoviedb.org/3/search/movie) for movie data."""
 
-    url = f"https://api.themoviedb.org/3/search/movie?query={movie}"
+    url = f"https://api.themoviedb.org/3/search/movie?query={movie}&page={page}"
     response = requests.get(url, headers=HEADERS)
     return response.json()
