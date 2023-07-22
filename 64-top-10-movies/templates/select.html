@@ -17,7 +17,7 @@
   {% for movie in movie_results %}
   <img src="{{ poster_base_url }}{{ poster_size }}/{{ movie.poster_path }}" alt="{{ movie.title }}-movie-poster">
   <p style="margin-bottom: 25px">
-    <a href="{{ url_for('select', id=movie.id) }}">{{ movie.title }} - {{ movie.release_date }}</a>
+    <a href="{{ url_for('select', id=movie.id) }}">{{ movie.title }} ({{ movie.release_date.split("-")[0] }})</a>
   </p>
   {% endfor %}
 </div>
