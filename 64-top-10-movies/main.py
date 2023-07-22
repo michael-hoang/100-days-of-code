@@ -127,9 +127,10 @@ def delete():
     return redirect(url_for("home"))
 
 
-@app.route("/add")
+@app.route("/add", methods=["GET", "POST"])
 def add():
-    return render_template("add.html")
+    add_form = AddMovieForm()
+    return render_template("add.html", form=add_form)
 
 
 if __name__ == "__main__":
