@@ -156,7 +156,17 @@ def select():
     )
     db.session.add(new_movie)
     db.session.commit()
-    return redirect(url_for("home"))
+    # movie_ratings_id = (
+    #     db.session.execute(
+    #         db.select(Movie).filter(
+    #             Movie.title.like(request.args["title"]),
+    #             Movie.year.like(request.args["release_year"]),
+    #         )
+    #     )
+    #     .scalar()
+    #     .id
+    # )
+    return redirect(url_for("edit", movie_id=new_movie.id))
 
 
 @app.route("/page")
