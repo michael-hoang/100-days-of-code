@@ -77,6 +77,7 @@ class AddMovieForm(FlaskForm):
     submit = SubmitField("Add Movie")
 
 
+# My helper functions
 def is_filled(field: fields) -> bool:
     """
     Return True if field is not empty.
@@ -93,6 +94,19 @@ def is_filled(field: fields) -> bool:
         if value == "":
             return False
     return True
+
+
+def search_movie(movie: str):
+    """Request TMDB API (https://api.themoviedb.org/3/search/movie) for movie data."""
+    load_dotenv()
+    url = f"https://api.themoviedb.org/3/search/movie?query={movie}"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {os.environ.get('TMDB_API_READ_ACCESS_TOKEN')}",
+    }
+    response = requests.get(url, headers=headers)
+    data = response.text
+    print(data)    
 
 
 @app.route("/")
@@ -134,8 +148,7 @@ def add():
     add_form = AddMovieForm()
     if add_form.validate_on_submit():
         title = add_form.title.data
-        load_dotenv()
-        tmdb_api_key = os.environ.get("TMDB_API_KEY")
+        search_movie(title)
 
     return render_template("add.html", form=add_form)
 
