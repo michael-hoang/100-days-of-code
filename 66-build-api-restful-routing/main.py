@@ -2,7 +2,9 @@ from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
-'''
+import random
+
+"""
 Install the required packages first: 
 Open the Terminal in PyCharm (bottom left). 
 
@@ -13,12 +15,12 @@ On MacOS type:
 pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
-'''
+"""
 
 app = Flask(__name__)
 
 ##Connect to Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafes.db"
 db = SQLAlchemy()
 db.init_app(app)
 
@@ -45,14 +47,27 @@ with app.app_context():
 @app.route("/")
 def home():
     return render_template("index.html")
-    
+
 
 ## HTTP GET - Read Record
 @app.route("/random")
 def random_cafe():
-    random_result = db.session.execute(db.select(Cafe).order_by(func.random())).scalar()
-    print(random_result)
-    return render_template("/index.html")
+    random_cafe = db.session.execute(db.select(Cafe).order_by(func.random())).scalar()
+
+    # # Alternatively...
+    # result = db.session.execute(db.select(Cafe))
+    # all_cafes_rows = result.scalars()
+    # all_cafes_list = all_cafes_rows.all()
+    # random_cafe = random.choice(all_cafes_list)
+
+    sorted_keys = sorted(random_cafe.__dict__.keys())
+    sorted_keys.remove("_sa_instance_state")
+    cafe_data = {}
+    for key in sorted_keys:
+        cafe_data[key] = getattr(random_cafe, key)
+
+    return jsonify(cafe=cafe_data)
+
 
 ## HTTP POST - Create Record
 
@@ -61,5 +76,5 @@ def random_cafe():
 ## HTTP DELETE - Delete Record
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
