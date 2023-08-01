@@ -1,0 +1,9 @@
+Serif: traditional , stable, respectable, authoritative
+
+Sans-serif: friendly, approachable, novel, contemporary, sensible, simple, straightforward
+
+Tips:
+Stick to only two fonts in one design (ex. making a poster or a section of a website)
+Combine fonts that have similar mood and time era. 
+
+Create inteerest by contrasting the Serif-ness (ex. Heading a Serif, body a San-serif, or the opposite. Contrasting font weights between heading and body also creates interest.

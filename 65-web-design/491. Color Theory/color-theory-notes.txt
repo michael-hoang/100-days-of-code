@@ -1,0 +1,7 @@
+Analogous colors create harmony
+	good for nav bars, body, logo
+	not so good for standing out
+
+Complementary colors create clashing
+	good for standing out, creates pop
+	don't style text and background with complementary colors, will look jarring

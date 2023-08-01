@@ -1,0 +1,7 @@
+1. Simplicity
+
+2. Consistency
+	Keep design and functionality consistent.
+
+3. Reading Patterns
+	"F" pattern/layout

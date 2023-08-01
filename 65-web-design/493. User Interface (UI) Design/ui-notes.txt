@@ -1,0 +1,5 @@
+Paragraph layout
+	- aim for 40-60 characters per line
+
+alignment
+	- try to reduce the number of alignment points
