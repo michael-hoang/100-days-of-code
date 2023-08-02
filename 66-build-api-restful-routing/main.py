@@ -39,6 +39,14 @@ class Cafe(db.Model):
     can_take_calls = db.Column(db.Boolean, nullable=False)
     coffee_price = db.Column(db.String(250), nullable=True)
 
+    def get_dict(self) -> dict:
+        """Return a Dictionary object containing data of cafe."""
+        cafe_data = {}
+        for col in self.__table__.columns:
+            cafe_data[col.name] = getattr(self, col.name)
+        sorted(cafe_data)
+        return cafe_data
+
 
 with app.app_context():
     db.create_all()
@@ -67,6 +75,16 @@ def random_cafe():
         cafe_data[key] = getattr(random_cafe, key)
 
     return jsonify(cafe=cafe_data)
+
+
+@app.route("/all")
+def all_cafes():
+    all_cafes = db.session.execute(db.select(Cafe)).scalars()
+    all_cafes_data = []
+    for cafe in all_cafes:
+        all_cafes_data.append(cafe.get_dict())
+
+    return jsonify(cafes=all_cafes_data)
 
 
 ## HTTP POST - Create Record
