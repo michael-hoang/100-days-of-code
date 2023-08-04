@@ -87,6 +87,23 @@ def all_cafes():
     return jsonify(cafes=all_cafes_data)
 
 
+@app.route("/search")
+def search():
+    location = request.args.get("loc")
+    query = db.select(Cafe).where(Cafe.location == location)
+    rows = db.session.execute(query)
+    # rows_as_list = rows.all()
+    cafes = rows.scalars()
+    cafes_as_list = cafes.all()
+    if cafes_as_list:
+        return jsonify(cafes=[cafe.get_dict() for cafe in cafes_as_list])
+
+    else:
+        return jsonify(
+            error={"Not Found": "Sorry, we don't have a cafe at that location."}
+        )
+
+
 ## HTTP POST - Create Record
 
 ## HTTP PUT/PATCH - Update Record
