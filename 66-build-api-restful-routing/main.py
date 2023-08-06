@@ -105,7 +105,7 @@ def search():
 
 
 ## HTTP POST - Create Record
-@app.route("/add", methods=["GET", "POST"])
+@app.route("/add", methods=["POST"])
 def add_cafe():
     new_cafe = Cafe(
         name=request.form.get("name"),
@@ -125,6 +125,10 @@ def add_cafe():
 
 
 ## HTTP PUT/PATCH - Update Record
+@app.route("/update-price/<int:cafe_id>", methods=["PATCH"])
+def update_price(cafe_id):
+    new_price = request.args.get("new_price")
+    return render_template("index.html")
 
 ## HTTP DELETE - Delete Record
 
