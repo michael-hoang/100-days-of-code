@@ -127,7 +127,9 @@ def add_cafe():
 ## HTTP PUT/PATCH - Update Record
 @app.route("/update-price/<int:cafe_id>", methods=["PATCH"])
 def update_price(cafe_id):
-    new_price = request.args.get("new_price")
+    cafe = db.get_or_404(Cafe, cafe_id)
+    cafe.coffee_price = request.args.get("new_price")
+    db.session.commit()
     return render_template("index.html")
 
 ## HTTP DELETE - Delete Record
